@@ -1,4 +1,5 @@
 import { assertNoObjectCoercion, toReadableText } from "./structured-text";
+import { PENDING_MARKER } from "./agent-generation";
 
 export interface ProdutoBrief {
   nome: string;
