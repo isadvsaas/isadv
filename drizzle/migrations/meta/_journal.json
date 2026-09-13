@@ -15,6 +15,13 @@
       "when": 1789324456971,
       "tag": "0001_agent_config_prompt_custom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789326328123,
+      "tag": "0002_seed_plans_starter_pro_business",
+      "breakpoints": true
     }
   ]
 }
