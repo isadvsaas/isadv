@@ -277,7 +277,8 @@ Gere o JSON do agente.`;
       supabase.from("crm_stage").select("nome,tipo,ordem").eq("company_id", companyId).order("ordem", { ascending: true }),
       supabase.from("produto").select("nome,preco,descricao,ordem").eq("company_id", companyId).eq("ativo", true).order("ordem", { ascending: true }),
     ]);
-    const mergedConfig = { ...(current ?? {}), ...config };
+    // Geração NÃO destrutiva: campos já confirmados permanecem; divergências viram conflito.
+    const { config: mergedConfig, conflitos } = mergeGeneratedConfig<Record<string, any>>(current ?? {}, config);
     const agendaTools = !!mergedConfig.agendamento_ativo;
     const promptPreview = assertNoObjectCoercion(buildSystemPrompt(mergedConfig as any, {
       responderEmPartes: mergedConfig.responder_em_partes ?? true,
@@ -286,8 +287,14 @@ Gere o JSON do agente.`;
       agendaTools,
     }), "Prompt final gerado");
 
+    // "config" devolve só o resultado já mesclado dos campos gerados,
+    // preservando o que o dono já tinha confirmado.
+    const configSegura = {} as GeneratedAgentConfig;
+    for (const k of FIELDS) (configSegura as any)[k] = String(mergedConfig[k] ?? "");
+
     return {
-      config,
+      config: configSegura,
+      conflitos,
       promptPreview,
       promptHasObjectCoercion: promptPreview.includes("[object Object]"),
     };
