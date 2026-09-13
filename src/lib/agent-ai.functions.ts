@@ -112,7 +112,7 @@ REGRAS DAS PERGUNTAS:
 - Faça NO MÁXIMO 6 perguntas — só as CRÍTICAS que faltam.
 - Linguagem de gente, não de formulário. O dono é leigo, topo de funil.
 - Cada pergunta tem um EXEMPLO concreto, plausível pro segmento dele, pra destravar.
-- NUNCA pergunte coisa que já está clara na descrição ou nas respostas anteriores.
+- NUNCA pergunte coisa que já está clara na descrição, nas respostas anteriores OU nos campos já salvos da configuração atual.
 - Se o negócio é simples e já tem o essencial (produtos + como vender + região OU horário), marque "pronto: true" e devolva perguntas: [].
 - Se faltar pouco mas crítico (ex: preços, formas de pagamento), marque "pronto: false".
 
@@ -135,6 +135,8 @@ Responda APENAS JSON válido neste formato:
 
     const user = `DESCRIÇÃO DO NEGÓCIO:
 ${data.descricao}
+
+${atualTxt ? `CAMPOS JÁ PREENCHIDOS NA CONFIGURAÇÃO (não pergunte de novo):\n${atualTxt}` : ""}
 
 ${respostasTxt ? `RESPOSTAS JÁ DADAS PELO DONO:\n${respostasTxt}` : ""}
 
