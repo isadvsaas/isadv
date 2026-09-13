@@ -240,9 +240,10 @@ export function buildSystemPrompt(
   const agendaReal = !!(c.agendamento_ativo && opts?.agendaTools);
 
   const autoBlocos = [
-    `Você é ${txt(c.nome_agente) || "um atendente virtual"}, atendendo no WhatsApp da empresa ${txt(c.nome_empresa) || "(empresa)"}.`,
+    `Você é ${txt(c.nome_agente) || PENDING_MARKER}, atendendo no WhatsApp da empresa ${txt(c.nome_empresa) || PENDING_MARKER}.`,
+    `INFORMAÇÃO MARCADA COMO ${PENDING_MARKER}: não foi informada pela empresa. NUNCA preencha, suponha ou invente esse conteúdo. Diga que vai confirmar com o time.`,
     sec("Como se apresenta na primeira mensagem", c.apresentacao),
-    `Objetivo: ${txt(c.papel_objetivo) || "atender clientes com cordialidade, descobrir o que precisam e ajudar a fechar a venda."}`,
+    `Objetivo: ${txt(c.papel_objetivo) || PENDING_MARKER}`,
     describeFoco(c.foco_atendimento),
     `Personalidade: ${personalidade}.`,
     sec("PALAVRAS / EXPRESSÕES PROIBIDAS (nunca use)", c.evitar_palavras),
