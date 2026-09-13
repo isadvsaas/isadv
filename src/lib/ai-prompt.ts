@@ -1,4 +1,5 @@
 import { assertNoObjectCoercion, toReadableText } from "./structured-text";
+import { PENDING_MARKER } from "./agent-generation";
 
 export interface ProdutoBrief {
   nome: string;
@@ -240,9 +241,10 @@ export function buildSystemPrompt(
   const agendaReal = !!(c.agendamento_ativo && opts?.agendaTools);
 
   const autoBlocos = [
-    `Você é ${txt(c.nome_agente) || "um atendente virtual"}, atendendo no WhatsApp da empresa ${txt(c.nome_empresa) || "(empresa)"}.`,
+    `Você é ${txt(c.nome_agente) || PENDING_MARKER}, atendendo no WhatsApp da empresa ${txt(c.nome_empresa) || PENDING_MARKER}.`,
+    `INFORMAÇÃO MARCADA COMO ${PENDING_MARKER}: não foi informada pela empresa. NUNCA preencha, suponha ou invente esse conteúdo. Diga que vai confirmar com o time.`,
     sec("Como se apresenta na primeira mensagem", c.apresentacao),
-    `Objetivo: ${txt(c.papel_objetivo) || "atender clientes com cordialidade, descobrir o que precisam e ajudar a fechar a venda."}`,
+    `Objetivo: ${txt(c.papel_objetivo) || PENDING_MARKER}`,
     describeFoco(c.foco_atendimento),
     `Personalidade: ${personalidade}.`,
     sec("PALAVRAS / EXPRESSÕES PROIBIDAS (nunca use)", c.evitar_palavras),
@@ -309,10 +311,11 @@ ESTILO DE MENSAGEM (WhatsApp humano):
 - Não soe como robô ("Como posso ajudá-lo hoje?"). Soe como um atendente real e atencioso.`,
   ];
 
-  // Prompt manual do cliente (edição avançada) tem prioridade sobre os blocos gerados.
-  // Os protocolos técnicos abaixo continuam sendo anexados para o motor não quebrar.
-  const promptManual = txt(c.prompt_custom);
-  const blocos: string[] = promptManual ? [promptManual] : autoBlocos;
+  // MODO MANUAL: o prompt escrito pelo cliente é conteúdo proprietário dele.
+  // É usado LITERALMENTE (sem trim, normalização ou resumo) e tem prioridade
+  // sobre os blocos automáticos. Só os protocolos técnicos de execução são anexados.
+  const promptManualRaw = typeof c.prompt_custom === "string" ? c.prompt_custom : "";
+  const blocos: string[] = promptManualRaw.trim() ? [promptManualRaw] : autoBlocos;
 
   if (partes) {
     blocos.push(

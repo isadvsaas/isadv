@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { Bot, Loader2, Save, Send, Sparkles, Plus, Trash2, Calendar, CheckCircle2, AlertCircle, LinkIcon } from "lucide-react";
 import { brand } from "@/config/brand";
 import { buildSystemPrompt } from "@/lib/ai-prompt";
+import { MANUAL_PROMPT_CONFIRM_MESSAGE, requiresManualPromptConfirmation } from "@/lib/agent-generation";
 import { testAiReply } from "@/lib/evolution.functions";
 import { startGoogleOAuth, disconnectGoogle } from "@/lib/google.functions";
 import { InitialsAvatar } from "@/components/ui/initials-avatar";
@@ -212,7 +213,7 @@ function AgentePage() {
           <p className="text-sm text-muted-foreground">Configure como sua IA conversa e vende.</p>
         </div>
         <Button onClick={save} disabled={saving}>
-          {saving ? <Loader2 className="size-4 mr-1.5 animate-spin" /> : <Save className="size-4 mr-1.5" />} Salvar
+          {saving ? <Loader2 className="size-4 mr-1.5 animate-spin" /> : <Save className="size-4 mr-1.5" />} Salvar alterações
         </Button>
       </header>
 
@@ -579,12 +580,24 @@ function AgentePage() {
                     type="button"
                     size="sm"
                     variant="outline"
-                    onClick={() => up("prompt_custom", promptPreview)}
+                    onClick={() => {
+                      if (requiresManualPromptConfirmation(cfg.prompt_custom) &&
+                          !window.confirm(MANUAL_PROMPT_CONFIRM_MESSAGE)) return;
+                      up("prompt_custom", promptPreview);
+                    }}
                   >
                     Usar o texto automático como base
                   </Button>
                   {String(cfg.prompt_custom ?? "").trim() ? (
-                    <Button type="button" size="sm" variant="ghost" onClick={() => up("prompt_custom", "")}>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        if (!window.confirm(MANUAL_PROMPT_CONFIRM_MESSAGE)) return;
+                        up("prompt_custom", "");
+                      }}
+                    >
                       Voltar para o texto automático
                     </Button>
                   ) : null}
@@ -598,7 +611,7 @@ function AgentePage() {
                 />
                 {String(cfg.prompt_custom ?? "").trim() ? (
                   <p className="text-xs text-[var(--brand-text)]">
-                    Este texto está valendo. Clique em Salvar para publicar.
+                    Este texto está valendo. Clique em Salvar alterações.
                   </p>
                 ) : null}
               </Section>

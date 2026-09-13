@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { assertNoObjectCoercion, toReadableText } from "./structured-text";
 import { AGENT_SAFE_COLUMNS } from "./agents";
+import { PENDING_MARKER, mergeGeneratedConfig, filterAnsweredQuestions } from "./agent-generation";
 
 export type GeneratedAgentConfig = {
   nome_agente: string;
@@ -73,18 +74,25 @@ export type BriefAnalysis = {
 
 export const analyzeBusinessBrief = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { descricao: string; respostas?: Record<string, string> }) => {
+  .inputValidator((d: { descricao: string; respostas?: Record<string, string>; atual?: Record<string, unknown> }) => {
     const desc = (d?.descricao || "").trim();
     if (desc.length < 10) throw new Error("Conte um pouco mais sobre o negócio.");
     return {
       descricao: desc.slice(0, 8000),
       respostas: d?.respostas && typeof d.respostas === "object" ? d.respostas : {},
+      atual: d?.atual && typeof d.atual === "object" ? d.atual : {},
     };
   })
   .handler(async ({ data }) => {
     const { lovableAiChat } = await import("./lovable-ai.server");
 
     const respostasTxt = answersToText(data.respostas);
+    const atualTxt = answersToText(
+      Object.fromEntries(
+        FIELDS.filter((f) => typeof data.atual[f] === "string" && String(data.atual[f]).trim())
+          .map((f) => [f, data.atual[f]]),
+      ),
+    );
 
     const system = `Você é um Product Manager sênior + consultor de vendas, especialista em montar agentes de WhatsApp para pequenos negócios brasileiros (donos leigos, topo de funil).
 
@@ -104,7 +112,7 @@ REGRAS DAS PERGUNTAS:
 - Faça NO MÁXIMO 6 perguntas — só as CRÍTICAS que faltam.
 - Linguagem de gente, não de formulário. O dono é leigo, topo de funil.
 - Cada pergunta tem um EXEMPLO concreto, plausível pro segmento dele, pra destravar.
-- NUNCA pergunte coisa que já está clara na descrição ou nas respostas anteriores.
+- NUNCA pergunte coisa que já está clara na descrição, nas respostas anteriores OU nos campos já salvos da configuração atual.
 - Se o negócio é simples e já tem o essencial (produtos + como vender + região OU horário), marque "pronto: true" e devolva perguntas: [].
 - Se faltar pouco mas crítico (ex: preços, formas de pagamento), marque "pronto: false".
 
@@ -128,6 +136,8 @@ Responda APENAS JSON válido neste formato:
     const user = `DESCRIÇÃO DO NEGÓCIO:
 ${data.descricao}
 
+${atualTxt ? `CAMPOS JÁ PREENCHIDOS NA CONFIGURAÇÃO (não pergunte de novo):\n${atualTxt}` : ""}
+
 ${respostasTxt ? `RESPOSTAS JÁ DADAS PELO DONO:\n${respostasTxt}` : ""}
 
 Analise e devolva o JSON.`;
@@ -141,7 +151,7 @@ Analise e devolva o JSON.`;
     );
 
     const parsed = extractJson(raw);
-    const perguntas: BriefQuestion[] = Array.isArray(parsed?.perguntas)
+    const perguntasBrutas: BriefQuestion[] = Array.isArray(parsed?.perguntas)
       ? parsed.perguntas.slice(0, 6).map((q: any, i: number) => ({
           id: String(q?.id || `q_${i}`).slice(0, 60),
           pergunta: String(q?.pergunta || "").slice(0, 240),
@@ -152,8 +162,14 @@ Analise e devolva o JSON.`;
         })).filter((q: BriefQuestion) => q.pergunta)
       : [];
 
+    // Nunca perguntar de novo algo já preenchido/respondido.
+    const perguntas = filterAnsweredQuestions(perguntasBrutas, {
+      config: data.atual,
+      respostas: data.respostas,
+    });
+
     const analysis: BriefAnalysis = {
-      pronto: !!parsed?.pronto && perguntas.filter((p) => p.obrigatoria).length === 0,
+      pronto: (!!parsed?.pronto || perguntas.length === 0) && perguntas.filter((p) => p.obrigatoria).length === 0,
       resumo: String(parsed?.resumo || "").slice(0, 400),
       cobertura: Math.max(0, Math.min(100, Number(parsed?.cobertura) || 0)),
       perguntas,
@@ -191,28 +207,34 @@ Sua tarefa: gerar a configuração COMPLETA do agente, no padrão de um PRD enxu
 Responda APENAS com JSON válido (sem markdown), com EXATAMENTE estas chaves (todas strings, PT-BR):
 ${FIELDS.map((f) => `- ${f}`).join("\n")}
 
+REGRA ABSOLUTA — O DONO É O DONO DA INFORMAÇÃO:
+- Você NÃO cria informação de negócio. Você só organiza o que o dono informou.
+- É PROIBIDO inventar preço, link, Pix, parcelamento, desconto, horário, endereço, prazo, política, etapa de CRM, processo interno ou regra comercial.
+- Preserve LITERALMENTE números, preços, URLs, telefones, chaves Pix e condições informadas. Não resuma, não arredonde, não reescreva.
+- Quando a informação for necessária e não tiver sido fornecida, devolva exatamente "${PENDING_MARKER}". Quando o campo for opcional e não houver informação, devolva "" (string vazia).
+- Nunca devolva política, FAQ, objeção ou fluxo comercial como fato do negócio se o dono não informou: nesses casos use "${PENDING_MARKER}".
+
 DIRETRIZES (siga à risca):
 - "nome_agente": curto, humano, brasileiro (ex: Lia, Bia, Tom, Rafa). Não use "Assistente", "Bot", "IA".
 - "papel_objetivo": 1-2 frases. O QUE o agente faz e PRA QUE (qualificar, vender, agendar).
 - "estilo_comunicacao": tom específico pro segmento (ex: padaria de bairro = caloroso e direto; clínica = cordial e seguro).
 - "apresentacao": 1ª mensagem real que o agente envia. Curta, humana, 1 emoji só se combinar. Nada de "Olá! Como posso ajudá-lo hoje?".
-- "sobre_empresa": parágrafo curto que o agente pode usar quando o cliente perguntar "quem é vocês".
-- "produtos_servicos": TEXTO corrido/linhas legíveis, um item por bloco, com nome em destaque e, em linhas seguintes, duração, valor, condições e link — exatamente como o dono informou. NUNCA invente preço. NUNCA devolva objeto/array.
-- "como_vender": passo a passo NUMERADO (3-6 passos) baseado NAS INSTRUÇÕES DO DONO. Se ele descreveu o fluxo comercial dele, PRESERVE esse fluxo; não substitua por funil genérico.
-- "objecoes": 3-5 objeções REAIS daquele segmento, em linhas "Objeção: ... / Resposta: ...". Ex: "Tá caro" → resposta concreta.
-- "faq": 4-6 perguntas que clientes daquele segmento REALMENTE fazem, em linhas "Pergunta: ... / Resposta: ...".
-- "politicas": troca, cancelamento, garantia, prazo — coerentes com o segmento e com o modelo de negócio. Se o dono não falou, escreva uma política padrão razoável e marcada como "(confirmar com o time)".
-- "posvenda_msg": mensagem curta de pós-venda alinhada ao tom. NUNCA garanta resultado, ganho, cura ou retorno financeiro — só ofereça acompanhamento e suporte.
-- "pode_fazer": lista (1 por linha) do que o agente pode prometer/fazer.
-- "nao_pode_fazer": lista (1 por linha) do que NÃO pode — inclua sempre "Não inventar preço, prazo ou política que não esteja aqui", "Não tratar comprovante enviado como pagamento confirmado" e "Não fechar venda sem confirmar os dados essenciais DESTE negócio". Se houver confirmação automática real, use-a; encaminhe ao humano somente quando não houver confirmação disponível ou houver divergência.
+- "sobre_empresa": parágrafo curto baseado SOMENTE no que o dono contou.
+- "produtos_servicos": TEXTO corrido/linhas legíveis, um item por bloco, com nome, duração, valor, condições e link — exatamente como o dono informou. NUNCA invente preço. NUNCA devolva objeto/array.
+- "como_vender": passo a passo NUMERADO baseado NAS INSTRUÇÕES DO DONO. Se ele não descreveu o fluxo, devolva "${PENDING_MARKER}". Não crie funil genérico.
+- "objecoes": só as objeções que o dono informou, em linhas "Objeção: ... / Resposta: ...". Se ele não informou, devolva "${PENDING_MARKER}".
+- "faq": só perguntas/respostas cuja resposta esteja nas informações do dono. Sem informação, "${PENDING_MARKER}".
+- "politicas": copie a política informada pelo dono. Se ele não informou, devolva exatamente "${PENDING_MARKER}". É PROIBIDO escrever uma política padrão.
+- "posvenda_msg": mensagem curta alinhada ao tom. NUNCA garanta resultado, ganho, cura ou retorno financeiro.
+- "pode_fazer": lista (1 por linha) do que o agente pode prometer/fazer, conforme o dono.
+- "nao_pode_fazer": lista (1 por linha) — inclua sempre "Não inventar preço, prazo ou política que não esteja aqui", "Não tratar comprovante enviado como pagamento confirmado" e "Não fechar venda sem confirmar os dados essenciais DESTE negócio".
 - "ofertas": só preencha se o dono mencionou promoção/cupom. Senão, "".
-- "formas_pagamento": copie LITERALMENTE valores, número máximo de parcelas, links, chave/valor do Pix e nomes informados. Não resuma, não arredonde, não remova nada. Se o dono não disse, "(consultar)".
-- Use "" (string vazia) quando faltar info — NUNCA omita chaves. NUNCA crie seção vazia com texto de enchimento.
-- TODAS as chaves são STRINGS de texto legível. É PROIBIDO devolver objeto, array ou JSON aninhado em qualquer chave.
-- Regras precisam CABER no negócio: se for serviço 100% online, não exija endereço/CEP/entrega; se for presencial, não fale de link de acesso.
+- "formas_pagamento": copie LITERALMENTE valores, parcelas, links, chave/valor do Pix e nomes informados. Se o dono não disse, "${PENDING_MARKER}".
+- "regiao_horario": só o que o dono informou. Sem informação, "${PENDING_MARKER}".
+- Use "" só em campos opcionais sem informação — NUNCA omita chaves.
+- TODAS as chaves são STRINGS de texto legível. É PROIBIDO devolver objeto, array ou JSON aninhado.
+- Regras precisam CABER no negócio: se for serviço 100% online, não exija endereço/CEP/entrega.
 - Nunca cite nomes de etapas de CRM, funis ou status internos: quem define isso é o sistema.
-- Nunca escreva horários específicos de atendimento/agenda que o dono não informou.
-- NÃO invente: preço, endereço, horário, telefone, prazo, estoque. Se faltar, deixe vazio ou marque "(consultar)".
 
 Retorne SÓ o JSON.`;
 
@@ -255,7 +277,8 @@ Gere o JSON do agente.`;
       supabase.from("crm_stage").select("nome,tipo,ordem").eq("company_id", companyId).order("ordem", { ascending: true }),
       supabase.from("produto").select("nome,preco,descricao,ordem").eq("company_id", companyId).eq("ativo", true).order("ordem", { ascending: true }),
     ]);
-    const mergedConfig = { ...(current ?? {}), ...config };
+    // Geração NÃO destrutiva: campos já confirmados permanecem; divergências viram conflito.
+    const { config: mergedConfig, conflitos } = mergeGeneratedConfig<Record<string, any>>(current ?? {}, config);
     const agendaTools = !!mergedConfig.agendamento_ativo;
     const promptPreview = assertNoObjectCoercion(buildSystemPrompt(mergedConfig as any, {
       responderEmPartes: mergedConfig.responder_em_partes ?? true,
@@ -264,8 +287,14 @@ Gere o JSON do agente.`;
       agendaTools,
     }), "Prompt final gerado");
 
+    // "config" devolve só o resultado já mesclado dos campos gerados,
+    // preservando o que o dono já tinha confirmado.
+    const configSegura = {} as GeneratedAgentConfig;
+    for (const k of FIELDS) (configSegura as any)[k] = String(mergedConfig[k] ?? "");
+
     return {
-      config,
+      config: configSegura,
+      conflitos,
       promptPreview,
       promptHasObjectCoercion: promptPreview.includes("[object Object]"),
     };
