@@ -579,12 +579,24 @@ function AgentePage() {
                     type="button"
                     size="sm"
                     variant="outline"
-                    onClick={() => up("prompt_custom", promptPreview)}
+                    onClick={() => {
+                      if (requiresManualPromptConfirmation(cfg.prompt_custom) &&
+                          !window.confirm(MANUAL_PROMPT_CONFIRM_MESSAGE)) return;
+                      up("prompt_custom", promptPreview);
+                    }}
                   >
                     Usar o texto automático como base
                   </Button>
                   {String(cfg.prompt_custom ?? "").trim() ? (
-                    <Button type="button" size="sm" variant="ghost" onClick={() => up("prompt_custom", "")}>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        if (!window.confirm(MANUAL_PROMPT_CONFIRM_MESSAGE)) return;
+                        up("prompt_custom", "");
+                      }}
+                    >
                       Voltar para o texto automático
                     </Button>
                   ) : null}
@@ -598,7 +610,7 @@ function AgentePage() {
                 />
                 {String(cfg.prompt_custom ?? "").trim() ? (
                   <p className="text-xs text-[var(--brand-text)]">
-                    Este texto está valendo. Clique em Salvar para publicar.
+                    Este texto está valendo. Clique em Salvar alterações.
                   </p>
                 ) : null}
               </Section>
