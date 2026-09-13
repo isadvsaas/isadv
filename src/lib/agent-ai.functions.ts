@@ -151,7 +151,7 @@ Analise e devolva o JSON.`;
     );
 
     const parsed = extractJson(raw);
-    const perguntas: BriefQuestion[] = Array.isArray(parsed?.perguntas)
+    const perguntasBrutas: BriefQuestion[] = Array.isArray(parsed?.perguntas)
       ? parsed.perguntas.slice(0, 6).map((q: any, i: number) => ({
           id: String(q?.id || `q_${i}`).slice(0, 60),
           pergunta: String(q?.pergunta || "").slice(0, 240),
@@ -162,8 +162,14 @@ Analise e devolva o JSON.`;
         })).filter((q: BriefQuestion) => q.pergunta)
       : [];
 
+    // Nunca perguntar de novo algo já preenchido/respondido.
+    const perguntas = filterAnsweredQuestions(perguntasBrutas, {
+      config: data.atual,
+      respostas: data.respostas,
+    });
+
     const analysis: BriefAnalysis = {
-      pronto: !!parsed?.pronto && perguntas.filter((p) => p.obrigatoria).length === 0,
+      pronto: (!!parsed?.pronto || perguntas.length === 0) && perguntas.filter((p) => p.obrigatoria).length === 0,
       resumo: String(parsed?.resumo || "").slice(0, 400),
       cobertura: Math.max(0, Math.min(100, Number(parsed?.cobertura) || 0)),
       perguntas,
