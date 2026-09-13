@@ -191,28 +191,34 @@ Sua tarefa: gerar a configuração COMPLETA do agente, no padrão de um PRD enxu
 Responda APENAS com JSON válido (sem markdown), com EXATAMENTE estas chaves (todas strings, PT-BR):
 ${FIELDS.map((f) => `- ${f}`).join("\n")}
 
+REGRA ABSOLUTA — O DONO É O DONO DA INFORMAÇÃO:
+- Você NÃO cria informação de negócio. Você só organiza o que o dono informou.
+- É PROIBIDO inventar preço, link, Pix, parcelamento, desconto, horário, endereço, prazo, política, etapa de CRM, processo interno ou regra comercial.
+- Preserve LITERALMENTE números, preços, URLs, telefones, chaves Pix e condições informadas. Não resuma, não arredonde, não reescreva.
+- Quando a informação for necessária e não tiver sido fornecida, devolva exatamente "${PENDING_MARKER}". Quando o campo for opcional e não houver informação, devolva "" (string vazia).
+- Nunca devolva política, FAQ, objeção ou fluxo comercial como fato do negócio se o dono não informou: nesses casos use "${PENDING_MARKER}".
+
 DIRETRIZES (siga à risca):
 - "nome_agente": curto, humano, brasileiro (ex: Lia, Bia, Tom, Rafa). Não use "Assistente", "Bot", "IA".
 - "papel_objetivo": 1-2 frases. O QUE o agente faz e PRA QUE (qualificar, vender, agendar).
 - "estilo_comunicacao": tom específico pro segmento (ex: padaria de bairro = caloroso e direto; clínica = cordial e seguro).
 - "apresentacao": 1ª mensagem real que o agente envia. Curta, humana, 1 emoji só se combinar. Nada de "Olá! Como posso ajudá-lo hoje?".
-- "sobre_empresa": parágrafo curto que o agente pode usar quando o cliente perguntar "quem é vocês".
-- "produtos_servicos": TEXTO corrido/linhas legíveis, um item por bloco, com nome em destaque e, em linhas seguintes, duração, valor, condições e link — exatamente como o dono informou. NUNCA invente preço. NUNCA devolva objeto/array.
-- "como_vender": passo a passo NUMERADO (3-6 passos) baseado NAS INSTRUÇÕES DO DONO. Se ele descreveu o fluxo comercial dele, PRESERVE esse fluxo; não substitua por funil genérico.
-- "objecoes": 3-5 objeções REAIS daquele segmento, em linhas "Objeção: ... / Resposta: ...". Ex: "Tá caro" → resposta concreta.
-- "faq": 4-6 perguntas que clientes daquele segmento REALMENTE fazem, em linhas "Pergunta: ... / Resposta: ...".
-- "politicas": troca, cancelamento, garantia, prazo — coerentes com o segmento e com o modelo de negócio. Se o dono não falou, escreva uma política padrão razoável e marcada como "(confirmar com o time)".
-- "posvenda_msg": mensagem curta de pós-venda alinhada ao tom. NUNCA garanta resultado, ganho, cura ou retorno financeiro — só ofereça acompanhamento e suporte.
-- "pode_fazer": lista (1 por linha) do que o agente pode prometer/fazer.
-- "nao_pode_fazer": lista (1 por linha) do que NÃO pode — inclua sempre "Não inventar preço, prazo ou política que não esteja aqui", "Não tratar comprovante enviado como pagamento confirmado" e "Não fechar venda sem confirmar os dados essenciais DESTE negócio". Se houver confirmação automática real, use-a; encaminhe ao humano somente quando não houver confirmação disponível ou houver divergência.
+- "sobre_empresa": parágrafo curto baseado SOMENTE no que o dono contou.
+- "produtos_servicos": TEXTO corrido/linhas legíveis, um item por bloco, com nome, duração, valor, condições e link — exatamente como o dono informou. NUNCA invente preço. NUNCA devolva objeto/array.
+- "como_vender": passo a passo NUMERADO baseado NAS INSTRUÇÕES DO DONO. Se ele não descreveu o fluxo, devolva "${PENDING_MARKER}". Não crie funil genérico.
+- "objecoes": só as objeções que o dono informou, em linhas "Objeção: ... / Resposta: ...". Se ele não informou, devolva "${PENDING_MARKER}".
+- "faq": só perguntas/respostas cuja resposta esteja nas informações do dono. Sem informação, "${PENDING_MARKER}".
+- "politicas": copie a política informada pelo dono. Se ele não informou, devolva exatamente "${PENDING_MARKER}". É PROIBIDO escrever uma política padrão.
+- "posvenda_msg": mensagem curta alinhada ao tom. NUNCA garanta resultado, ganho, cura ou retorno financeiro.
+- "pode_fazer": lista (1 por linha) do que o agente pode prometer/fazer, conforme o dono.
+- "nao_pode_fazer": lista (1 por linha) — inclua sempre "Não inventar preço, prazo ou política que não esteja aqui", "Não tratar comprovante enviado como pagamento confirmado" e "Não fechar venda sem confirmar os dados essenciais DESTE negócio".
 - "ofertas": só preencha se o dono mencionou promoção/cupom. Senão, "".
-- "formas_pagamento": copie LITERALMENTE valores, número máximo de parcelas, links, chave/valor do Pix e nomes informados. Não resuma, não arredonde, não remova nada. Se o dono não disse, "(consultar)".
-- Use "" (string vazia) quando faltar info — NUNCA omita chaves. NUNCA crie seção vazia com texto de enchimento.
-- TODAS as chaves são STRINGS de texto legível. É PROIBIDO devolver objeto, array ou JSON aninhado em qualquer chave.
-- Regras precisam CABER no negócio: se for serviço 100% online, não exija endereço/CEP/entrega; se for presencial, não fale de link de acesso.
+- "formas_pagamento": copie LITERALMENTE valores, parcelas, links, chave/valor do Pix e nomes informados. Se o dono não disse, "${PENDING_MARKER}".
+- "regiao_horario": só o que o dono informou. Sem informação, "${PENDING_MARKER}".
+- Use "" só em campos opcionais sem informação — NUNCA omita chaves.
+- TODAS as chaves são STRINGS de texto legível. É PROIBIDO devolver objeto, array ou JSON aninhado.
+- Regras precisam CABER no negócio: se for serviço 100% online, não exija endereço/CEP/entrega.
 - Nunca cite nomes de etapas de CRM, funis ou status internos: quem define isso é o sistema.
-- Nunca escreva horários específicos de atendimento/agenda que o dono não informou.
-- NÃO invente: preço, endereço, horário, telefone, prazo, estoque. Se faltar, deixe vazio ou marque "(consultar)".
 
 Retorne SÓ o JSON.`;
 
