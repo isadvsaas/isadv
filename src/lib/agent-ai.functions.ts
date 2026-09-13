@@ -74,18 +74,25 @@ export type BriefAnalysis = {
 
 export const analyzeBusinessBrief = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { descricao: string; respostas?: Record<string, string> }) => {
+  .inputValidator((d: { descricao: string; respostas?: Record<string, string>; atual?: Record<string, unknown> }) => {
     const desc = (d?.descricao || "").trim();
     if (desc.length < 10) throw new Error("Conte um pouco mais sobre o negócio.");
     return {
       descricao: desc.slice(0, 8000),
       respostas: d?.respostas && typeof d.respostas === "object" ? d.respostas : {},
+      atual: d?.atual && typeof d.atual === "object" ? d.atual : {},
     };
   })
   .handler(async ({ data }) => {
     const { lovableAiChat } = await import("./lovable-ai.server");
 
     const respostasTxt = answersToText(data.respostas);
+    const atualTxt = answersToText(
+      Object.fromEntries(
+        FIELDS.filter((f) => typeof data.atual[f] === "string" && String(data.atual[f]).trim())
+          .map((f) => [f, data.atual[f]]),
+      ),
+    );
 
     const system = `Você é um Product Manager sênior + consultor de vendas, especialista em montar agentes de WhatsApp para pequenos negócios brasileiros (donos leigos, topo de funil).
 
