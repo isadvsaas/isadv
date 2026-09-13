@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { assertNoObjectCoercion, toReadableText } from "./structured-text";
 import { AGENT_SAFE_COLUMNS } from "./agents";
+import { PENDING_MARKER, mergeGeneratedConfig, filterAnsweredQuestions } from "./agent-generation";
 
 export type GeneratedAgentConfig = {
   nome_agente: string;
