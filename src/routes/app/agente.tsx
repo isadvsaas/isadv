@@ -17,6 +17,11 @@ import { buildSystemPrompt } from "@/lib/ai-prompt";
 import { toReadableText } from "@/lib/structured-text";
 import { testAiReply } from "@/lib/evolution.functions";
 import { generateAgentConfig, analyzeBusinessBrief, type BriefQuestion } from "@/lib/agent-ai.functions";
+import {
+  MANUAL_PROMPT_CONFIRM_MESSAGE,
+  mergeGeneratedConfig,
+  requiresManualPromptConfirmation,
+} from "@/lib/agent-generation";
 import { InitialsAvatar } from "@/components/ui/initials-avatar";
 
 export const Route = createFileRoute("/app/agente")({
