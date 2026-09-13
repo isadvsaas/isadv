@@ -336,7 +336,7 @@ function AgentePage() {
               <Settings2 className="size-3.5 mr-1.5" /> Editar manualmente
             </Link>
           </Button>
-          <Button variant="outline" size="sm" onClick={() => { setHasConfig(false); setDescricao(""); setStep("descrever"); setPerguntas([]); setRespostas({}); setResumoIA(""); setCobertura(0); }}>
+          <Button variant="outline" size="sm" onClick={() => { if (!confirmarSobrescrita()) return; setHasConfig(false); setDescricao(""); setStep("descrever"); setPerguntas([]); setRespostas({}); setResumoIA(""); setCobertura(0); }}>
             <RefreshCcw className="size-3.5 mr-1.5" /> Refazer
           </Button>
           <Button onClick={save} disabled={saving}>
