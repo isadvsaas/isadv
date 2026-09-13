@@ -90,19 +90,26 @@ function AgentePage() {
   }
   useEffect(() => { void reload(); }, [companyId]);
 
+  /** Modo manual: nada pode substituir o prompt escrito pelo dono sem confirmação. */
+  function confirmarSobrescrita(): boolean {
+    if (!requiresManualPromptConfirmation(cfg?.prompt_custom)) return true;
+    return window.confirm(MANUAL_PROMPT_CONFIRM_MESSAGE);
+  }
+
   async function runAnalyze() {
     if (descricao.trim().length < 20) {
       return toast.error("Conte um pouco mais sobre o negócio (mínimo ~20 caracteres).");
     }
+    if (!confirmarSobrescrita()) return;
     setAnalyzing(true);
     try {
-      const a: any = await analyze({ data: { descricao, respostas: {} } });
+      const a: any = await analyze({ data: { descricao, respostas: {}, atual: cfg ?? {} } });
       setResumoIA(a.resumo || "");
       setCobertura(a.cobertura || 0);
       setPerguntas(a.perguntas || []);
       if (a.pronto || !a.perguntas?.length) {
         // já dá pra gerar direto
-        await runGenerate({});
+        await runGenerate({}, true);
       } else {
         setStep("entrevista");
       }
@@ -113,16 +120,25 @@ function AgentePage() {
     }
   }
 
-  async function runGenerate(extraRespostas: Record<string, string>) {
+  async function runGenerate(extraRespostas: Record<string, string>, jaConfirmado = false) {
+    if (!jaConfirmado && !confirmarSobrescrita()) return;
     setGenerating(true);
     try {
       const merged = { ...respostas, ...extraRespostas };
       const r: any = await generate({ data: { descricao, respostas: merged } });
-      setCfg((prev: any) => ({ ...(prev || {}), ...r.config }));
+      setCfg((prev: any) => mergeGeneratedConfig(prev || {}, r.config).config);
       setPromptPreview(r.promptPreview);
       setHasConfig(true);
       setStep("pronto");
-      toast.success("Pronto! Sua IA foi montada com base no seu negócio.");
+      if (Array.isArray(r.conflitos) && r.conflitos.length) {
+        toast.warning(
+          `Alguns campos já preenchidos ficaram diferentes do que você acabou de contar (${r.conflitos
+            .map((c: any) => c.campo)
+            .join(", ")}). Mantivemos o que já estava salvo — confirme na edição manual.`,
+        );
+      } else {
+        toast.success("Pronto! Sua IA foi montada com base no seu negócio.");
+      }
     } catch (e: any) {
       toast.error(e?.message || "Falha ao gerar configuração");
     } finally {
