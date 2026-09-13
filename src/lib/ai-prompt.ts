@@ -311,10 +311,11 @@ ESTILO DE MENSAGEM (WhatsApp humano):
 - Não soe como robô ("Como posso ajudá-lo hoje?"). Soe como um atendente real e atencioso.`,
   ];
 
-  // Prompt manual do cliente (edição avançada) tem prioridade sobre os blocos gerados.
-  // Os protocolos técnicos abaixo continuam sendo anexados para o motor não quebrar.
-  const promptManual = txt(c.prompt_custom);
-  const blocos: string[] = promptManual ? [promptManual] : autoBlocos;
+  // MODO MANUAL: o prompt escrito pelo cliente é conteúdo proprietário dele.
+  // É usado LITERALMENTE (sem trim, normalização ou resumo) e tem prioridade
+  // sobre os blocos automáticos. Só os protocolos técnicos de execução são anexados.
+  const promptManualRaw = typeof c.prompt_custom === "string" ? c.prompt_custom : "";
+  const blocos: string[] = promptManualRaw.trim() ? [promptManualRaw] : autoBlocos;
 
   if (partes) {
     blocos.push(
