@@ -51,7 +51,7 @@ function NovaEmpresa() {
     setBusy(true); setCreated(null);
     try {
       const r = await create({
-        data: { nome, ownerEmail, planId: planId || null, trialDays, password: password || null },
+        data: { nome, ownerEmail, planId: planId || null, password: password || null },
       });
       toast.success("Empresa criada e liberada com trial");
       setCreated({ email: ownerEmail, password: r.tempPassword ?? (password || null) });
@@ -109,7 +109,7 @@ function NovaEmpresa() {
                   <button
                     type="button"
                     key={p.id}
-                    onClick={() => setPlanId(p.id)}
+                    onClick={() => { setPlanId(p.id); setTrialDays(p.trial_days ?? 0); }}
                     className={`text-left rounded-xl border p-3 transition ${
                       sel ? "border-primary ring-2 ring-primary/30 bg-primary/5" : "hover:bg-muted/50"
                     }`}
