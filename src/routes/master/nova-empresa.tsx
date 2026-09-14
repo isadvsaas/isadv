@@ -51,7 +51,7 @@ function NovaEmpresa() {
     setBusy(true); setCreated(null);
     try {
       const r = await create({
-        data: { nome, ownerEmail, planId: planId || null, trialDays, password: password || null },
+        data: { nome, ownerEmail, planId: planId || null, password: password || null },
       });
       toast.success("Empresa criada e liberada com trial");
       setCreated({ email: ownerEmail, password: r.tempPassword ?? (password || null) });
@@ -93,12 +93,10 @@ function NovaEmpresa() {
             </div>
             <div>
               <Label>Dias de teste grátis</Label>
-              <Input
-                type="number" min={0} max={90}
-                value={trialDays}
-                onChange={(e) => setTrialDays(Math.max(0, Math.min(90, Number(e.target.value) || 0)))}
-              />
-              <p className="text-[11px] text-muted-foreground mt-1">Após esse prazo o cliente precisa pagar pra continuar.</p>
+              <Input value={`${trialDays} ${trialDays === 1 ? "dia" : "dias"}`} readOnly disabled />
+              <p className="text-[11px] text-muted-foreground mt-1">
+                Definido pelo plano selecionado. Após esse prazo o cliente precisa pagar pra continuar.
+              </p>
             </div>
           </div>
 
@@ -111,7 +109,7 @@ function NovaEmpresa() {
                   <button
                     type="button"
                     key={p.id}
-                    onClick={() => setPlanId(p.id)}
+                    onClick={() => { setPlanId(p.id); setTrialDays(p.trial_days ?? 0); }}
                     className={`text-left rounded-xl border p-3 transition ${
                       sel ? "border-primary ring-2 ring-primary/30 bg-primary/5" : "hover:bg-muted/50"
                     }`}
