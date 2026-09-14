@@ -208,15 +208,8 @@ export const createCompanyWithOwner = createServerFn({ method: "POST" })
       if (!ex) break;
       slug = `${baseSlug}-${i}`;
     }
-    const trialMs = data.trialDays * 86400000;
-    const trialEnd = new Date(Date.now() + trialMs).toISOString();
-
-    // Plano escolhido pelo master fica registrado na empresa (o checkout só entra em cena no fim do trial).
-    let planSlug: string | null = null;
-    if (data.planId) {
-      const { data: pl } = await supabaseAdmin.from("plan").select("slug").eq("id", data.planId).maybeSingle();
-      planSlug = pl?.slug ?? null;
-    }
+    // Dias grátis SEMPRE vêm do plano (nunca do formulário).
+    const trialEnd = computeTrialEnd(Date.now(), plan.trial_days);
 
     const { data: comp, error: cErr } = await supabaseAdmin
       .from("company")
@@ -224,9 +217,9 @@ export const createCompanyWithOwner = createServerFn({ method: "POST" })
         nome: data.nome,
         slug,
         created_by: ownerId,
-        status_cobranca: data.trialDays > 0 ? "trial" : "ativo",
+        status_cobranca: "trial",
         trial_ate: trialEnd,
-        selected_plan_slug: planSlug,
+        selected_plan_slug: plan.slug,
         onboarding_completed: false,
         onboarding_step: 0,
       })
@@ -234,22 +227,29 @@ export const createCompanyWithOwner = createServerFn({ method: "POST" })
       .single();
     if (cErr || !comp) throw new Error(cErr?.message || "Falha ao criar empresa");
 
-    await supabaseAdmin.from("company_user").insert({
-      company_id: comp.id, user_id: ownerId, role: "owner", ativo: true, forcar_troca_senha: !data.password && !!tempPassword,
-    });
+    // Evita registros parciais: se vínculo ou assinatura falhar, desfaz a empresa criada.
+    try {
+      const { error: cuErr } = await supabaseAdmin.from("company_user").insert({
+        company_id: comp.id, user_id: ownerId, role: "owner", ativo: true, forcar_troca_senha: !data.password && !!tempPassword,
+      });
+      if (cuErr) throw cuErr;
 
-    // Cria subscription em trialing já com o plano selecionado
-    if (data.planId) {
-      await supabaseAdmin.from("subscription").insert({
+      const { error: subErr } = await supabaseAdmin.from("subscription").insert({
         company_id: comp.id,
-        plan_id: data.planId,
-        status: data.trialDays > 0 ? "trialing" : "active",
+        plan_id: plan.id,
+        status: "trialing",
         trial_ends_at: trialEnd,
         current_period_end: trialEnd,
       });
+      if (subErr) throw subErr;
+    } catch (e: any) {
+      await supabaseAdmin.from("company_user").delete().eq("company_id", comp.id);
+      await supabaseAdmin.from("subscription").delete().eq("company_id", comp.id);
+      await supabaseAdmin.from("company").delete().eq("id", comp.id);
+      throw new Error(e?.message || "Falha ao vincular empresa ao plano");
     }
 
-    return { ok: true, companyId: comp.id, tempPassword };
+    return { ok: true, companyId: comp.id, tempPassword, trialAte: trialEnd, trialDays: plan.trial_days };
   });
 
 export const listPlansBasic = createServerFn({ method: "POST" })
