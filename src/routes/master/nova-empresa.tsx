@@ -93,12 +93,10 @@ function NovaEmpresa() {
             </div>
             <div>
               <Label>Dias de teste grátis</Label>
-              <Input
-                type="number" min={0} max={90}
-                value={trialDays}
-                onChange={(e) => setTrialDays(Math.max(0, Math.min(90, Number(e.target.value) || 0)))}
-              />
-              <p className="text-[11px] text-muted-foreground mt-1">Após esse prazo o cliente precisa pagar pra continuar.</p>
+              <Input value={`${trialDays} ${trialDays === 1 ? "dia" : "dias"}`} readOnly disabled />
+              <p className="text-[11px] text-muted-foreground mt-1">
+                Definido pelo plano selecionado. Após esse prazo o cliente precisa pagar pra continuar.
+              </p>
             </div>
           </div>
 
