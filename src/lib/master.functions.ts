@@ -179,6 +179,16 @@ export const createCompanyWithOwner = createServerFn({ method: "POST" })
     await assertSuper(context.supabase, context.userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+    // Plano ativo é obrigatório e é a fonte da verdade dos dias grátis.
+    const { data: plan, error: planErr } = await supabaseAdmin
+      .from("plan")
+      .select("id, slug, trial_days, ativo")
+      .eq("id", data.planId)
+      .eq("ativo", true)
+      .maybeSingle();
+    if (planErr) throw planErr;
+    if (!plan) throw new Error("Plano inválido ou inativo. Selecione um plano ativo.");
+
     // owner
     let ownerId: string | null = null;
     const { data: prof } = await supabaseAdmin.from("profiles").select("user_id").eq("email", data.ownerEmail).maybeSingle();
