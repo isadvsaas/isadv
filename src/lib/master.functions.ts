@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { slugify } from "@/lib/tenant";
+import { computeTrialEnd } from "@/lib/trial";
 
 async function assertSuper(supabase: any, userId: string) {
   const { data, error } = await supabase
