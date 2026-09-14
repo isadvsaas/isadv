@@ -169,12 +169,10 @@ export const createCompanyWithOwner = createServerFn({ method: "POST" })
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ownerEmail)) throw new Error("Email inválido");
     const password = d.password ? String(d.password) : null;
     if (password && password.length < 8) throw new Error("Senha mínima de 8 caracteres");
-    return {
-      nome, ownerEmail,
-      planId: d.planId || null,
-      trialDays: Math.max(0, Math.min(90, Math.floor(d.trialDays ?? 3))),
-      password,
-    };
+    const planId = d.planId ? String(d.planId) : null;
+    if (!planId) throw new Error("Selecione um plano ativo para criar a empresa.");
+    // trialDays do formulário é ignorado: a fonte da verdade é plan.trial_days.
+    return { nome, ownerEmail, planId, password };
   })
   .handler(async ({ context, data }) => {
     await assertSuper(context.supabase, context.userId);
