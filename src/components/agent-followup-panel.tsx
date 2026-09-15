@@ -150,7 +150,7 @@ export function AgentFollowupPanel({ companyId, agentId }: { companyId?: string;
     return (
       <div className="space-y-3">
         <p className="text-sm text-muted-foreground">
-          Se o cliente parar de responder, o {"AtendZap"} pode entrar em contato novamente automaticamente.
+          Se o contato parar de responder, o {brand.name} pode entrar em contato novamente automaticamente.
         </p>
         <Button onClick={createSeq} className="w-full sm:w-auto"><Plus className="size-4 mr-1.5" /> Ativar lembretes automáticos</Button>
       </div>

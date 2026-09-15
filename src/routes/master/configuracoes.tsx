@@ -150,7 +150,7 @@ function ConfigPage() {
                 </ol>
               </div>
               <div className="rounded-md border bg-muted/40 p-2.5">
-                <b>Vínculo cliente → empresa:</b> usamos o e-mail do comprador. O cadastro do cliente no AtendZap precisa usar o
+                <b>Vínculo cliente → empresa:</b> usamos o e-mail do comprador. O cadastro do cliente no {brand.name} precisa usar o
                 <b> mesmo e-mail</b> da compra. Para identificar o plano, casamos pelo <code>slug</code> do plano ou pelo trecho final da
                 <code>checkout_url</code> com o <code>product_id</code> recebido.
               </div>
