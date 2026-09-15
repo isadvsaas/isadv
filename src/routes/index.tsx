@@ -26,16 +26,16 @@ export const Route = createFileRoute("/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: `${brand.name} — IA atende seu WhatsApp 24h e organiza o CRM sozinha` },
+      { title: `${brand.name} — Atendimento inteligente para advocacia` },
       {
         name: "description",
         content:
-          "Conecte seu número de WhatsApp em 2 minutos. A IA do AtendZap responde, qualifica e move cada lead no funil automaticamente. 3 dias grátis para testar.",
+          "Centralize conversas, organize contatos no CRM e use inteligência artificial para sua equipe atender com mais agilidade.",
       },
-      { property: "og:title", content: `${brand.name} — WhatsApp + IA + CRM no automático` },
+      { property: "og:title", content: `${brand.name} — Atendimento inteligente para advocacia` },
       {
         property: "og:description",
-        content: "Sua IA atende o WhatsApp 24h e organiza o CRM sozinha.",
+        content: "Centralize conversas, organize contatos no CRM e agilize o atendimento do seu escritório com inteligência artificial.",
       },
     ],
   }),
@@ -75,7 +75,7 @@ function Landing() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[1400px] z-0 overflow-hidden">
         <div
           className="lp-glow-a hidden md:block absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, #25D366 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(circle, var(--brand) 0%, transparent 60%)" }}
         />
         <div
           className="lp-glow-b hidden md:block absolute top-[20%] -right-40 h-[700px] w-[700px] rounded-full blur-3xl"
@@ -83,7 +83,7 @@ function Landing() {
         />
         <div
           className="lp-glow-c md:hidden absolute -top-32 left-1/2 -translate-x-1/2 h-[420px] w-[420px] rounded-full blur-2xl"
-          style={{ background: "radial-gradient(circle, #25D366 0%, transparent 60%)" }}
+          style={{ background: "radial-gradient(circle, var(--brand) 0%, transparent 60%)" }}
         />
       </div>
 
@@ -107,13 +107,13 @@ function Landing() {
         .font-display { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.025em; }
         .font-brand { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 900; letter-spacing: -0.04em; }
         .text-grad {
-          background: linear-gradient(95deg, #25D366 0%, #a3e635 45%, #22d3ee 100%);
+          background: linear-gradient(95deg, var(--brand) 0%, var(--brand-strong) 55%, #22d3ee 100%);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
         }
         .btn-glow {
-          box-shadow: 0 10px 30px -12px rgba(37,211,102,0.55), 0 0 0 1px rgba(37,211,102,0.35) inset;
+          box-shadow: 0 10px 30px -12px rgba(37,99,235,0.55), 0 0 0 1px rgba(37,99,235,0.35) inset;
         }
 
         /* ===== LP tokens ===== */
@@ -140,8 +140,8 @@ function Landing() {
           --lp-input-bg: #111d18;
           --lp-input-pill: #0b1410;
           --lp-final-bg: linear-gradient(135deg,#0c3a23,#0a1a13);
-          --lp-final-bd: rgba(37,211,102,0.30);
-          --lp-final-shadow: 0 40px 120px -40px rgba(37,211,102,0.6);
+          --lp-final-bd: rgba(37,99,235,0.30);
+          --lp-final-shadow: 0 40px 120px -40px rgba(37,99,235,0.6);
         }
         .lp-root.is-light {
           --lp-bg: #F5F8F6;
@@ -166,15 +166,15 @@ function Landing() {
           --lp-input-bg: #FFFFFF;
           --lp-input-pill: #EEF3EF;
           --lp-final-bg: linear-gradient(135deg,#E8F6EE,#FFFFFF);
-          --lp-final-bd: rgba(22,163,74,0.30);
-          --lp-final-shadow: 0 40px 120px -40px rgba(22,163,74,0.35);
+          --lp-final-bd: rgba(37,99,235,0.30);
+          --lp-final-shadow: 0 40px 120px -40px rgba(37,99,235,0.35);
         }
 
         .lp-root { background: var(--lp-bg); color: rgb(var(--lp-fg-strong-rgb)); }
         .lp-root .glass { background: var(--lp-glass-bg); border: 1px solid var(--lp-glass-bd); transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease; }
-        .lp-root .glass:hover { border-color: rgba(37,211,102,0.45); box-shadow: 0 14px 40px -18px rgba(37,211,102,0.35); }
+        .lp-root .glass:hover { border-color: rgba(37,99,235,0.45); box-shadow: 0 14px 40px -18px rgba(37,99,235,0.35); }
         .lp-root .glass-strong { background: var(--lp-glass-strong-bg); border: 1px solid var(--lp-glass-strong-bd); transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease; }
-        .lp-root .glass-strong:hover { border-color: rgba(37,211,102,0.55); box-shadow: 0 18px 50px -18px rgba(37,211,102,0.45); }
+        .lp-root .glass-strong:hover { border-color: rgba(37,99,235,0.55); box-shadow: 0 18px 50px -18px rgba(37,99,235,0.45); }
         @media (min-width: 768px) {
           .lp-root .glass { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
           .lp-root .glass-strong { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
@@ -223,7 +223,7 @@ function Landing() {
           content: '';
           position: absolute; inset: 0;
           border-radius: 9999px;
-          background: #25D366;
+          background: var(--brand);
           animation: dot-pulse 1.8s ease-out infinite;
           opacity: 0.6;
         }
@@ -251,7 +251,7 @@ function Landing() {
           position: absolute; inset: -1px;
           border-radius: inherit;
           padding: 1px;
-          background: linear-gradient(120deg, transparent 30%, rgba(37,211,102,0.6) 50%, transparent 70%);
+          background: linear-gradient(120deg, transparent 30%, rgba(37,99,235,0.6) 50%, transparent 70%);
           background-size: 200% 100%;
           -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           -webkit-mask-composite: xor;
@@ -286,11 +286,11 @@ function Header({
     <header className="lp-header sticky top-0 z-50 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-5 md:px-8 h-[4.5rem] md:h-20 flex items-center justify-between gap-3">
         <a href="/" className="flex items-center gap-2.5">
-          <span className="grid h-10 w-10 md:h-11 md:w-11 place-items-center rounded-2xl btn-glow" style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}>
-            <Zap className="size-5 text-black" strokeWidth={2.6} />
+          <span className="grid h-10 w-10 md:h-11 md:w-11 place-items-center rounded-2xl btn-glow bg-gradient-brand">
+            <Zap className="size-5 text-primary-foreground" strokeWidth={2.6} />
           </span>
           <span className="font-brand text-[1.5rem] md:text-[1.7rem] leading-none">
-            Atend<span className="text-grad">AI</span>
+            {brand.name}
           </span>
         </a>
         <nav className="hidden md:flex items-center gap-8 text-[15px] font-semibold text-white/70">
@@ -314,8 +314,7 @@ function Header({
           </button>
           <button
             onClick={() => onCta("#planos")}
-            className="text-[15px] font-bold px-5 py-3 rounded-xl text-black btn-glow"
-            style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}
+            className="text-[15px] font-bold px-5 py-3 rounded-xl text-primary-foreground btn-glow bg-gradient-brand"
           >
             Ver planos
           </button>
@@ -334,24 +333,22 @@ function Hero({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#planos",
       <div className="mx-auto max-w-7xl grid lg:grid-cols-2 gap-10 md:gap-16 items-center relative">
         <div className="text-center lg:text-left">
           <div className="inline-flex items-center gap-2 text-[13px] px-3.5 py-1.5 rounded-full glass">
-            <span className="relative inline-block size-2 rounded-full bg-[#25D366] dot-pulse" />
-            <span className="text-white/80 font-semibold">WhatsApp + IA + CRM no automático</span>
+            <span className="relative inline-block size-2 rounded-full bg-brand dot-pulse" />
+            <span className="text-white/80 font-semibold">Atendimento inteligente para advocacia</span>
           </div>
 
           <h1 className="font-display text-[clamp(3rem,10vw,7rem)] leading-[0.92] mt-6 tracking-tight font-black">
-            Sua IA atende o WhatsApp <span className="text-grad">24h</span> e organiza o CRM <span className="text-grad">sozinha</span>.
+            Transforme o WhatsApp em uma central de atendimento para o seu escritório
           </h1>
 
           <p className="mt-6 text-[17px] sm:text-xl text-white/70 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Conecte seu número, treine o agente em uma tela e veja cada lead ser respondido na hora,
-            qualificado e movido no funil — sem você levantar o dedo.
+            Centralize conversas, organize contatos no CRM e use inteligência artificial para sua equipe atender com mais agilidade.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start">
             <button
               onClick={() => onCta("#planos")}
-              className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-black font-bold text-[16px] btn-glow"
-              style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}
+              className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl text-primary-foreground font-bold text-[16px] btn-glow bg-gradient-brand"
             >
               Começar 3 dias grátis
               <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />
@@ -365,9 +362,9 @@ function Hero({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#planos",
           </div>
 
           <ul className="mt-7 flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-white/65 font-medium">
-            <li className="flex items-center gap-1.5"><Check className="size-4 text-[#25D366]" /> 3 dias grátis</li>
-            <li className="flex items-center gap-1.5"><Check className="size-4 text-[#25D366]" /> Conecta em 2 minutos</li>
-            <li className="flex items-center gap-1.5"><Check className="size-4 text-[#25D366]" /> Cancele quando quiser</li>
+            <li className="flex items-center gap-1.5"><Check className="size-4 text-brand" /> 3 dias grátis</li>
+            <li className="flex items-center gap-1.5"><Check className="size-4 text-brand" /> Conversas centralizadas</li>
+            <li className="flex items-center gap-1.5"><Check className="size-4 text-brand" /> CRM organizado</li>
           </ul>
         </div>
 
@@ -385,7 +382,7 @@ function PhoneMock() {
       {/* glow */}
       <div
         className="absolute -inset-10 rounded-[3rem] blur-3xl opacity-60"
-        style={{ background: "radial-gradient(circle, #25D366 0%, transparent 60%)" }}
+        style={{ background: "radial-gradient(circle, var(--brand) 0%, transparent 60%)" }}
       />
       {/* phone */}
       <div
@@ -403,26 +400,26 @@ function PhoneMock() {
           </div>
           {/* chat header */}
           <div className="flex items-center gap-3 px-4 py-3" style={{ background: "var(--lp-chat-header-bg)", borderBottom: "1px solid var(--lp-chat-header-bd)" }}>
-            <div className="grid place-items-center size-9 rounded-full text-black font-bold" style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}>
-              A
+            <div className="grid place-items-center size-9 rounded-full text-primary-foreground font-bold bg-gradient-brand">
+              IS
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-semibold truncate">AtendZap • IA</div>
-              <div className="text-[10px] text-[#25D366] flex items-center gap-1.5">
-                <span className="size-1.5 rounded-full bg-[#25D366]" /> online agora
+              <div className="text-sm font-semibold truncate">{brand.name} • IA</div>
+              <div className="text-[10px] text-brand flex items-center gap-1.5">
+                <span className="size-1.5 rounded-full bg-brand" /> online agora
               </div>
             </div>
           </div>
           {/* messages */}
           <div className="flex-1 px-3 py-4 space-y-3 overflow-hidden">
-            <Bubble side="left" delay="0s">Oi! Vi o anúncio do site. Vocês ainda têm vaga pra essa semana?</Bubble>
-            <Bubble side="right" delay=".4s">Oi Marina, tudo bem? 👋 Temos sim! Pra qual serviço você tá pensando?</Bubble>
-            <Bubble side="left" delay=".8s">Quero fazer design de sobrancelha + cílios</Bubble>
+            <Bubble side="left" delay="0s">Olá! O escritório atende casos de direito trabalhista?</Bubble>
+            <Bubble side="right" delay=".4s">Olá! Atendemos, sim. Posso fazer algumas perguntas para encaminhar seu contato à equipe?</Bubble>
+            <Bubble side="left" delay=".8s">Claro. Fui desligada da empresa ontem.</Bubble>
             <Bubble side="right" delay="1.2s">
-              Perfeito 🤌 Tenho quinta 15h ou sexta 10h. Qual prefere?
+              Entendi. Vou registrar as informações iniciais para o escritório analisar seu atendimento.
             </Bubble>
             <div className="flex items-center gap-2 text-[10px] text-white/50 pl-2 reveal" style={{ animationDelay: "1.6s" }}>
-              <Sparkles className="size-3 text-[#25D366]" />
+              <Sparkles className="size-3 text-brand" />
               respondido pela IA em 3s
             </div>
           </div>
@@ -431,8 +428,8 @@ function PhoneMock() {
             <div className="flex-1 h-9 rounded-full px-4 text-xs text-white/40 grid place-items-start content-center" style={{ background: "var(--lp-input-pill)" }}>
               Mensagem
             </div>
-            <div className="size-9 rounded-full grid place-items-center" style={{ background: "#25D366" }}>
-              <ArrowRight className="size-4 text-black" />
+            <div className="size-9 rounded-full grid place-items-center bg-brand">
+              <ArrowRight className="size-4 text-primary-foreground" />
             </div>
           </div>
         </div>
@@ -442,25 +439,25 @@ function PhoneMock() {
       {/* floating CRM card — escondido em telas muito pequenas pra não estourar */}
       <div className="hidden sm:block absolute -left-10 sm:-left-16 bottom-20 glass-strong rounded-2xl p-3.5 w-[220px] shadow-2xl animate-float" style={{ animationDelay: "1.5s" }}>
         <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-white/50 font-semibold">
-          <KanbanSquare className="size-3 text-[#25D366]" />
+          <KanbanSquare className="size-3 text-brand" />
           CRM atualizado
         </div>
         <div className="mt-2 flex items-center gap-2.5">
           <div className="size-9 rounded-full grid place-items-center font-bold text-black" style={{ background: "#a3e635" }}>M</div>
           <div className="min-w-0">
-            <div className="text-sm font-semibold truncate">Marina</div>
-            <div className="text-[11px] text-white/55 truncate">8 pessoas → Negociando</div>
+            <div className="text-sm font-semibold truncate">Novo contato</div>
+            <div className="text-[11px] text-white/55 truncate">Triagem → Em análise</div>
           </div>
         </div>
         <div className="mt-3 h-1.5 rounded-full bg-white/10 overflow-hidden">
-          <div className="h-full w-2/3" style={{ background: "linear-gradient(90deg,#25D366,#a3e635)" }} />
+          <div className="h-full w-2/3 bg-gradient-brand" />
         </div>
       </div>
 
       {/* floating badge top */}
       <div className="hidden sm:flex absolute -right-6 sm:-right-10 top-12 glass-strong rounded-xl px-3 py-2 items-center gap-2 shadow-2xl animate-float" style={{ animationDelay: "3s" }}>
-        <span className="size-2 rounded-full bg-[#25D366] dot-pulse relative" />
-        <span className="text-xs font-medium">Lead respondido</span>
+        <span className="size-2 rounded-full bg-brand dot-pulse relative" />
+        <span className="text-xs font-medium">Contato respondido</span>
       </div>
     </div>
   );
@@ -478,7 +475,7 @@ function Bubble({ children, side, delay }: { children: React.ReactNode; side: "l
         className={`max-w-[78%] px-3 py-2 text-[13px] leading-snug rounded-2xl ${isRight ? "rounded-br-sm text-black" : "rounded-bl-sm"}`}
         style={
           isRight
-            ? { background: "linear-gradient(135deg,#25D366,#16a34a)", boxShadow: "0 8px 24px -8px rgba(37,211,102,0.5)" }
+            ? { background: "linear-gradient(135deg,var(--brand),var(--brand-strong))", boxShadow: "0 8px 24px -8px rgba(37,99,235,0.5)" }
             : { background: "var(--lp-bubble-left-bg)", border: "1px solid var(--lp-bubble-left-bd)", color: "var(--lp-bubble-left-fg)" }
         }
       >
@@ -492,10 +489,10 @@ function Bubble({ children, side, delay }: { children: React.ReactNode; side: "l
 /* ===================== STATS ===================== */
 function Stats() {
   const items = [
-    { n: "3s", l: "tempo de resposta" },
-    { n: "24/7", l: "no ar" },
-    { n: "+38%", l: "conversão" },
-    { n: "0", l: "lead esquecido" },
+    { n: "1", l: "caixa de entrada" },
+    { n: "24/7", l: "organização contínua" },
+    { n: "CRM", l: "contatos organizados" },
+    { n: "IA", l: "apoio à equipe" },
   ];
   return (
     <section className="px-5 md:px-8 py-12 md:py-16">
@@ -517,12 +514,11 @@ function Pain() {
     <section className="px-5 md:px-8 py-24 md:py-28">
       <div className="mx-auto max-w-3xl text-center reveal" data-reveal>
         <h2 className="font-display text-4xl md:text-6xl leading-[1.02] tracking-tight">
-          Lead que espera, lead que <span className="text-grad">compra do concorrente</span>.
+          Atendimento jurídico começa com <span className="text-grad">organização e agilidade</span>.
         </h2>
         <p className="mt-6 text-lg md:text-xl text-white/65 leading-relaxed">
-          A primeira empresa a responder vende. Sempre. Enquanto você está dirigindo, atendendo na loja
-          ou dormindo, os leads do anúncio que você pagou estão sumindo na fila. O AtendZap responde
-          em segundos, qualifica e já te entrega o lead pronto pra fechar.
+          Reúna as conversas do escritório, registre cada novo contato e mantenha a equipe alinhada.
+          O {brand.name} ajuda no atendimento inicial sem substituir a análise e a atuação dos profissionais.
         </p>
       </div>
     </section>
@@ -535,26 +531,26 @@ function HowItWorks() {
     {
       n: "01",
       t: "Conecte o WhatsApp",
-      d: "Escaneia o QR Code uma vez e pronto. Funciona com o número que você já usa.",
+      d: "Leia o QR Code uma vez e use o número que seu escritório já utiliza.",
       icon: <MessageSquareText className="size-5" />,
     },
     {
       n: "02",
       t: "Treine sua IA",
-      d: "Uma tela com a personalidade da empresa, produtos, regras. Salvou? Já tá atendendo.",
+      d: "Defina o tom do escritório, as áreas de atuação e as regras para o atendimento inicial.",
       icon: <Bot className="size-5" />,
     },
     {
       n: "03",
-      t: "A IA atende e organiza o CRM",
-      d: "Responde no automático, qualifica, e move o card no kanban — você só fecha.",
+      t: "A equipe atende com contexto",
+      d: "A IA apoia as respostas iniciais e mantém os contatos organizados no CRM.",
       icon: <KanbanSquare className="size-5" />,
     },
   ];
   return (
     <section id="como" className="px-5 md:px-8 py-24 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionTitle eyebrow="Como funciona" title={<>Em 3 passos. <span className="text-grad">Sério.</span></>} />
+        <SectionTitle eyebrow="Como funciona" title={<>Um fluxo simples para <span className="text-grad">o seu escritório.</span></>} />
         <div className="mt-12 grid md:grid-cols-3 gap-5">
           {steps.map((s) => (
             <div key={s.n} className="glass border-sheen rounded-2xl p-7 relative reveal" data-reveal>
@@ -576,16 +572,16 @@ function HowItWorks() {
 function Features() {
   const items = [
     { t: "Inbox unificado", d: "Todas as conversas em um só lugar, com histórico completo por contato.", icon: <MessageSquareText className="size-5" /> },
-    { t: "IA que responde como você", d: "Treinada com o tom da sua empresa. Faz uma pergunta por vez, não soa robô.", icon: <Bot className="size-5" /> },
-    { t: "CRM kanban automático", d: "A IA classifica e move: Conversas, Negociando, Ganho, Perda. Sem digitar.", icon: <KanbanSquare className="size-5" /> },
+    { t: "IA com o tom do escritório", d: "Configure orientações, áreas de atuação e informações confirmadas pela sua equipe.", icon: <Bot className="size-5" /> },
+    { t: "CRM em kanban", d: "Organize contatos por etapa e acompanhe o andamento de cada atendimento.", icon: <KanbanSquare className="size-5" /> },
     { t: "Multi-atendente", d: "Convide seu time. Cada um vê o que importa, com papéis e permissões.", icon: <Users className="size-5" /> },
-    { t: "Pausa por palavra", d: "Digitou /pausar? A IA cala a boca e você assume aquele contato.", icon: <PauseCircle className="size-5" /> },
-    { t: "Relatórios que mostram o dinheiro", d: "Tempo de resposta, conversão, taxa de ganho. Decisão em segundos.", icon: <LineChart className="size-5" /> },
+    { t: "Pausa por palavra", d: "Use /pausar para interromper a IA e assumir pessoalmente a conversa.", icon: <PauseCircle className="size-5" /> },
+    { t: "Relatórios de atendimento", d: "Acompanhe tempo de resposta, volume de conversas e evolução dos contatos.", icon: <LineChart className="size-5" /> },
   ];
   return (
     <section id="recursos" className="px-5 md:px-8 py-24 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionTitle eyebrow="Recursos" title={<>Tudo que você precisa pra <span className="text-grad">parar de perder venda</span>.</>} />
+        <SectionTitle eyebrow="Recursos" title={<>Mais clareza para <span className="text-grad">atender e acompanhar contatos</span>.</>} />
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((it) => (
             <div key={it.t} className="glass border-sheen rounded-2xl p-6 hover:-translate-y-1 transition-transform reveal" data-reveal>
@@ -666,10 +662,10 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
               key={pl.n}
               className={`relative rounded-2xl p-7 flex flex-col reveal ${pl.highlight ? "glass-strong" : "glass"}`}
               data-reveal
-              style={pl.highlight ? { boxShadow: "0 20px 60px -20px rgba(37,211,102,0.5), 0 0 0 1px rgba(37,211,102,0.4) inset" } : undefined}
+              style={pl.highlight ? { boxShadow: "0 20px 60px -20px rgba(37,99,235,0.5), 0 0 0 1px rgba(37,99,235,0.4) inset" } : undefined}
             >
               {pl.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full text-black whitespace-nowrap" style={{ background: "linear-gradient(135deg,#25D366,#a3e635)" }}>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full text-primary-foreground whitespace-nowrap bg-gradient-brand">
                   Mais popular · 4× mais conversas
                 </div>
               )}
@@ -683,7 +679,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
                 {pl.f.map((x) => (
                   <li key={x} className="flex gap-2.5">
                     <span className="mt-0.5 size-4 rounded-full grid place-items-center shrink-0" style={{ background: "rgba(37,211,102,0.2)" }}>
-                      <Check className="size-2.5 text-[#25D366]" strokeWidth={3} />
+                      <Check className="size-2.5 text-brand" strokeWidth={3} />
                     </span>
                     <span className="text-white/80">{x}</span>
                   </li>
@@ -694,7 +690,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
                 className={`mt-7 w-full px-4 py-3 rounded-xl font-semibold transition ${
                   pl.highlight ? "text-black btn-glow" : "glass-strong text-white hover:bg-white/10"
                 }`}
-                style={pl.highlight ? { background: "linear-gradient(135deg,#25D366,#16a34a)" } : undefined}
+                style={pl.highlight ? { background: "linear-gradient(135deg,var(--brand),var(--brand-strong))" } : undefined}
               >
                 {pl.cta}
               </button>
@@ -710,23 +706,14 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
 /* ===================== TESTIMONIALS ===================== */
 function Testimonials() {
   const items = [
-    {
-      n: "Camila — Studio de Estética",
-      t: "Eu atendia entre clientes e perdia muita agenda. Agora a IA marca sozinha. Faturei 32% a mais no segundo mês.",
-    },
-    {
-      n: "Rafael — Loja de Suplementos",
-      t: "A galera me chamava no WhatsApp 1h da manhã. Hoje todo mundo é respondido na hora. CRM organizado sem eu tocar.",
-    },
-    {
-      n: "Marina — Agência de Marketing",
-      t: "Tirei o lead frio do operacional do time. A IA filtra e só passa quem é quente. Salvou minha sanidade.",
-    },
+    { n: "Atendimento inicial", t: "Organize as informações recebidas pelo WhatsApp antes de encaminhar cada contato à equipe responsável." },
+    { n: "Rotina do escritório", t: "Mantenha conversas, histórico e próximos passos reunidos em um só lugar para facilitar o acompanhamento." },
+    { n: "Gestão de contatos", t: "Visualize cada etapa no CRM e identifique quais atendimentos precisam da ação de um profissional." },
   ];
   return (
     <section className="px-5 md:px-8 py-24 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionTitle eyebrow="Quem usa" title={<>Times que pararam de perder venda <span className="text-grad">no 'oi, sumiu'</span>.</>} />
+        <SectionTitle eyebrow="No dia a dia" title={<>Informação organizada para <span className="text-grad">decisões mais ágeis</span>.</>} />
         <div className="mt-12 grid md:grid-cols-3 gap-5">
           {items.map((it) => (
             <div key={it.n} className="glass border-sheen rounded-2xl p-6 reveal" data-reveal>
@@ -748,7 +735,7 @@ function Faq() {
   const items = [
     {
       q: "Preciso saber programar?",
-      a: "Não. Você conecta o WhatsApp por QR Code, preenche uma tela contando sobre sua empresa, e a IA já tá atendendo. Quem sabe usar WhatsApp consegue.",
+      a: "Não. Você conecta o WhatsApp por QR Code e informa como o escritório deseja conduzir o atendimento inicial.",
     },
     {
       q: "Funciona com vários atendentes?",
@@ -756,7 +743,11 @@ function Faq() {
     },
     {
       q: "A IA responde igual um robô?",
-      a: "Não. Ela é treinada pra falar como gente — mensagens curtas, uma pergunta por vez, no tom da sua empresa. Em testes cegos, cliente nem percebe.",
+      a: "Você define o tom e as informações que ela pode usar. A equipe pode assumir a conversa sempre que necessário.",
+    },
+    {
+      q: "A IA oferece aconselhamento jurídico?",
+      a: "Não. Ela apoia o atendimento inicial e a organização das informações. A orientação jurídica continua sob responsabilidade dos profissionais do escritório.",
     },
     {
       q: "Meu número fica seguro?",
@@ -803,21 +794,20 @@ function FinalCta({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plan
         }}
       >
 
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 size-[500px] rounded-full opacity-40 blur-3xl" style={{ background: "radial-gradient(circle,#25D366,transparent 60%)" }} />
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 size-[500px] rounded-full opacity-40 blur-3xl" style={{ background: "radial-gradient(circle,var(--brand),transparent 60%)" }} />
         <div className="relative">
           <h2 className="font-display text-4xl sm:text-5xl md:text-7xl leading-[0.98] tracking-tight">
-            Pare de perder venda no <span className="text-grad">"oi, sumiu"</span>.
+            Organize o atendimento do seu escritório <span className="text-grad">desde a primeira mensagem</span>.
           </h2>
           <p className="mt-6 text-white/70 max-w-xl mx-auto text-lg sm:text-xl">
-            3 dias grátis pra ver a IA atendendo seu WhatsApp e fechando lead sozinha. Cancele antes e não paga nada.
+            Teste por 3 dias como a IA pode apoiar sua equipe na triagem e na organização dos contatos.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-3">
             <button
               onClick={() => onCta("/entrar")}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-black font-bold text-base sm:text-lg btn-glow"
-              style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-primary-foreground font-bold text-base sm:text-lg btn-glow bg-gradient-brand"
             >
-              Começar agora, de graça <ArrowRight className="size-5" />
+              Começar 3 dias grátis <ArrowRight className="size-5" />
             </button>
             <button onClick={() => onCta("/demo/dashboard")} className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl glass-strong text-white hover:bg-white/10 text-base sm:text-lg font-medium">
               <Play className="size-4" /> Ver demonstração
@@ -837,13 +827,13 @@ function Footer() {
         <div className="grid gap-10 md:gap-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-2xl btn-glow" style={{ background: "linear-gradient(135deg,#25D366,#16a34a)" }}>
-                <Zap className="size-4 text-black" strokeWidth={2.6} />
+              <span className="grid h-10 w-10 place-items-center rounded-2xl btn-glow bg-gradient-brand">
+                <Zap className="size-4 text-primary-foreground" strokeWidth={2.6} />
               </span>
-              <span className="font-brand text-[1.4rem] leading-none">Atend<span className="text-grad">AI</span></span>
+              <span className="font-brand text-[1.4rem] leading-none">{brand.name}</span>
             </div>
             <p className="mt-4 text-sm text-white/55 leading-relaxed max-w-xs">
-              IA que atende seu WhatsApp 24h, qualifica e organiza o CRM sozinha. Você só fecha.
+              Atendimento inteligente para escritórios de advocacia, com conversas e contatos organizados em um só lugar.
             </p>
           </div>
           <div>
@@ -886,10 +876,10 @@ function SectionTitle({ eyebrow, title }: { eyebrow: string; title: React.ReactN
   // Padronizado: sempre centralizado, maior, com eyebrow em destaque.
   return (
     <div className="reveal text-center" data-reveal>
-      <div className="inline-flex items-center justify-center gap-3 text-[11px] uppercase tracking-[0.28em] text-[#25D366] font-bold">
-        <span className="h-px w-10 bg-[#25D366]/60" />
+      <div className="inline-flex items-center justify-center gap-3 text-[11px] uppercase tracking-[0.28em] text-brand font-bold">
+        <span className="h-px w-10 bg-brand/60" />
         {eyebrow}
-        <span className="h-px w-10 bg-[#25D366]/60" />
+        <span className="h-px w-10 bg-brand/60" />
       </div>
       <h2 className="font-display text-5xl md:text-7xl font-black leading-[0.98] tracking-tight mt-5 max-w-4xl mx-auto">
         {title}

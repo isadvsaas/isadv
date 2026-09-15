@@ -61,8 +61,8 @@
 :root {
   --radius: 0.9rem;
 
-  --brand: #16A34A;
-  --brand-strong: #15924A;
+  --brand: oklch(0.62 0.19 259);
+  --brand-strong: #1D4ED8;
   --brand-master: #DC2626;
 
   --bg-deep: #E8EEEA;
@@ -95,7 +95,7 @@
   --input: rgba(6,22,14,.13);
   --ring: var(--brand);
 
-  --chart-1: #16A34A;
+  --chart-1: oklch(0.62 0.19 259);
   --chart-2: #0EA5E9;
   --chart-3: #65A30D;
   --chart-4: #DC2626;
@@ -110,16 +110,16 @@
   --sidebar-border: var(--hairline);
   --sidebar-ring: var(--brand);
 
-  --brand-soft: rgba(22,163,74,.10);
-  --brand-soft-strong: rgba(22,163,74,.18);
-  --brand-text: #15924A;
+  --brand-soft: rgba(37,99,235,.10);
+  --brand-soft-strong: rgba(37,99,235,.18);
+  --brand-text: #1D4ED8;
 
   --shadow-card: 0 1px 3px rgba(6,22,14,.07), 0 1px 2px rgba(6,22,14,.04);
-  --shadow-glow: 0 0 0 1px rgba(22,163,74,.18), 0 8px 24px -10px rgba(22,163,74,.30);
+  --shadow-glow: 0 0 0 1px rgba(37,99,235,.18), 0 8px 24px -10px rgba(37,99,235,.30);
 
   --page-gradient:
-    radial-gradient(900px 500px at 100% -10%, rgba(22,163,74,.05), transparent 60%),
-    radial-gradient(700px 400px at -10% 10%, rgba(22,163,74,.04), transparent 60%),
+    radial-gradient(900px 500px at 100% -10%, rgba(37,99,235,.05), transparent 60%),
+    radial-gradient(700px 400px at -10% 10%, rgba(37,99,235,.04), transparent 60%),
     var(--bg-deep);
 }
 
@@ -129,8 +129,8 @@
 .dark {
   color-scheme: dark;
 
-  --brand: #16A34A;
-  --brand-strong: #3FD27C;
+  --brand: oklch(0.62 0.19 259);
+  --brand-strong: #60A5FA;
   --brand-master: #FF5A5A;
 
   --bg-deep: #081410;
@@ -163,7 +163,7 @@
   --input: rgba(255,255,255,.12);
   --ring: var(--brand-strong);
 
-  --chart-1: #3FD27C;
+  --chart-1: #60A5FA;
   --chart-2: #22D3EE;
   --chart-3: #A3E635;
   --chart-4: #FF5A5A;
@@ -178,16 +178,16 @@
   --sidebar-border: var(--hairline);
   --sidebar-ring: var(--brand-strong);
 
-  --brand-soft: rgba(22,163,74,.14);
-  --brand-soft-strong: rgba(22,163,74,.22);
-  --brand-text: #3FD27C;
+  --brand-soft: rgba(37,99,235,.14);
+  --brand-soft-strong: rgba(37,99,235,.22);
+  --brand-text: #60A5FA;
 
   --shadow-card: 0 1px 0 rgba(255,255,255,.02) inset, 0 6px 18px -10px rgba(0,0,0,.5);
-  --shadow-glow: 0 0 0 1px rgba(22,163,74,.20), 0 8px 28px -10px rgba(22,163,74,.30);
+  --shadow-glow: 0 0 0 1px rgba(37,99,235,.20), 0 8px 28px -10px rgba(37,99,235,.30);
 
   --page-gradient:
-    radial-gradient(1200px 600px at 85% -15%, rgba(22,163,74,.07), transparent 60%),
-    radial-gradient(900px 500px at -10% 15%, rgba(22,163,74,.05), transparent 60%),
+    radial-gradient(1200px 600px at 85% -15%, rgba(37,99,235,.07), transparent 60%),
+    radial-gradient(900px 500px at -10% 15%, rgba(37,99,235,.05), transparent 60%),
     var(--bg-deep);
 }
 

@@ -1,10 +1,9 @@
 // Branding centralizado. Troque aqui pra renomear/recolorir o app inteiro.
 export const brand = {
-  name: "AtendZap",
-  tagline: "Seu WhatsApp atendendo por você.",
-  // WhatsApp green
-  primary: "#22C55E",
-  primaryOklch: "0.72 0.18 152",
+  name: "IS ADV",
+  tagline: "Atendimento inteligente para advocacia",
+  primary: "#2563EB",
+  primaryOklch: "0.62 0.19 259",
 };
 
 // Suporte fixo — usado em rodapé, telas de erro e mensagens de falha.
