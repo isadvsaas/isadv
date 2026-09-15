@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Plus, Trash2, Loader2, ArrowUp, ArrowDown, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
+import { brand } from "@/config/brand";
 
 type Seq = {
   id: string;
