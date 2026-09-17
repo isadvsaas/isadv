@@ -105,7 +105,7 @@ function EnableGate({ onEnabled }: { onEnabled: () => void }) {
         </div>
         <div className="rounded-lg bg-muted/40 p-4 text-sm space-y-2">
           <div className="flex items-start gap-2"><Sparkles className="size-4 mt-0.5 text-[color:var(--brand)]" />
-            <span>Toda vez que um lead for movido para o estágio <b>Ganho</b> no CRM, uma receita pendente será criada automaticamente.</span>
+            <span>Toda vez que um contato for movido para o estágio <b>Ganho</b> no CRM, uma receita pendente será criada automaticamente.</span>
           </div>
           <div>Você também pode lançar receitas e despesas manualmente.</div>
         </div>
@@ -215,7 +215,7 @@ function FinanceiroContent({ diasVenc: _diasVenc }: { diasVenc: number }) {
         <div>
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
             Financeiro
-            <HelpTip text="Controle de contas a pagar e a receber, com automação a partir do CRM. Vendas marcadas como Ganho viram receita pendente automaticamente." />
+            <HelpTip text="Controle de contas a pagar e a receber, com automação a partir do CRM. Contratações marcadas como Ganho viram receita pendente automaticamente." />
           </h1>
           <p className="text-sm text-muted-foreground">Fluxo de caixa, lançamentos e categorias.</p>
         </div>

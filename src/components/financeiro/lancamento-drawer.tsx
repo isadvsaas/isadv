@@ -82,7 +82,7 @@ export function LancamentoDrawer({
           )}
           <div>
             <Label>Descrição</Label>
-            <Input value={f.descricao} onChange={(e) => setF({ ...f, descricao: e.target.value })} placeholder="Ex: Venda do plano anual" />
+            <Input value={f.descricao} onChange={(e) => setF({ ...f, descricao: e.target.value })} placeholder="Ex: Honorários advocatícios" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>

@@ -118,10 +118,10 @@ function Landing() {
 
         /* ===== LP tokens ===== */
         .lp-root.is-dark {
-          --lp-bg: #04100A;
+          --lp-bg: #07111F;
           --lp-fg-rgb: 255,255,255;
           --lp-fg-strong-rgb: 255,255,255;
-          --lp-fg-inv: #0A1510;
+          --lp-fg-inv: #09111F;
           --lp-glass-bg: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
           --lp-glass-bd: rgba(255,255,255,0.10);
           --lp-glass-strong-bg: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
@@ -129,43 +129,43 @@ function Landing() {
           --lp-header-bg: rgba(4,16,10,0.55);
           --lp-header-bd: rgba(255,255,255,0.06);
           --lp-grid: rgba(255,255,255,0.04);
-          --lp-bubble-left-bg: #1b2926;
+          --lp-bubble-left-bg: #172235;
           --lp-bubble-left-bd: rgba(255,255,255,0.05);
           --lp-bubble-left-fg: #FFFFFF;
-          --lp-phone-shell: linear-gradient(180deg,#1a1f1d,#0b0f0d);
+          --lp-phone-shell: linear-gradient(180deg,#1B2638,#080F1A);
           --lp-phone-shell-bd: rgba(255,255,255,0.08);
-          --lp-phone-screen: #0b1410;
-          --lp-chat-header-bg: #111d18;
+          --lp-phone-screen: #0B1422;
+          --lp-chat-header-bg: #111C2D;
           --lp-chat-header-bd: rgba(255,255,255,0.05);
-          --lp-input-bg: #111d18;
-          --lp-input-pill: #0b1410;
-          --lp-final-bg: linear-gradient(135deg,#0c3a23,#0a1a13);
+          --lp-input-bg: #111C2D;
+          --lp-input-pill: #0B1422;
+          --lp-final-bg: linear-gradient(135deg,#102B5C,#0A172C);
           --lp-final-bd: rgba(37,99,235,0.30);
           --lp-final-shadow: 0 40px 120px -40px rgba(37,99,235,0.6);
         }
         .lp-root.is-light {
-          --lp-bg: #F5F8F6;
-          --lp-fg-rgb: 6,16,11;
+          --lp-bg: #F5F7FB;
+          --lp-fg-rgb: 9,17,31;
           --lp-fg-strong-rgb: 0,0,0;
           --lp-fg-inv: #FFFFFF;
           --lp-glass-bg: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));
-          --lp-glass-bd: rgba(10,21,16,0.12);
+          --lp-glass-bd: rgba(15,23,42,0.12);
           --lp-glass-strong-bg: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.88));
-          --lp-glass-strong-bd: rgba(10,21,16,0.16);
+          --lp-glass-strong-bd: rgba(15,23,42,0.16);
           --lp-header-bg: rgba(255,255,255,0.82);
-          --lp-header-bd: rgba(10,21,16,0.10);
-          --lp-grid: rgba(10,21,16,0.06);
-          --lp-bubble-left-bg: #EEF3EF;
-          --lp-bubble-left-bd: rgba(10,21,16,0.08);
-          --lp-bubble-left-fg: #050D09;
-          --lp-phone-shell: linear-gradient(180deg,#E2E8E4,#BFCAC3);
-          --lp-phone-shell-bd: rgba(10,21,16,0.12);
-          --lp-phone-screen: #F2F6F3;
+          --lp-header-bd: rgba(15,23,42,0.10);
+          --lp-grid: rgba(15,23,42,0.06);
+          --lp-bubble-left-bg: #EDF2FA;
+          --lp-bubble-left-bd: rgba(15,23,42,0.08);
+          --lp-bubble-left-fg: #09111F;
+          --lp-phone-shell: linear-gradient(180deg,#E2E8F0,#BAC5D6);
+          --lp-phone-shell-bd: rgba(15,23,42,0.12);
+          --lp-phone-screen: #F2F5FA;
           --lp-chat-header-bg: #FFFFFF;
           --lp-chat-header-bd: rgba(10,21,16,0.08);
           --lp-input-bg: #FFFFFF;
-          --lp-input-pill: #EEF3EF;
-          --lp-final-bg: linear-gradient(135deg,#E8F6EE,#FFFFFF);
+          --lp-input-pill: #EDF2FA;
+          --lp-final-bg: linear-gradient(135deg,#EAF1FF,#FFFFFF);
           --lp-final-bd: rgba(37,99,235,0.30);
           --lp-final-shadow: 0 40px 120px -40px rgba(37,99,235,0.35);
         }
@@ -555,7 +555,7 @@ function HowItWorks() {
           {steps.map((s) => (
             <div key={s.n} className="glass border-sheen rounded-2xl p-7 relative reveal" data-reveal>
               <div className="font-display text-5xl text-white/10 absolute right-5 top-4">{s.n}</div>
-              <div className="size-11 rounded-xl grid place-items-center" style={{ background: "rgba(37,211,102,0.15)", color: "#25D366" }}>
+              <div className="size-11 rounded-xl grid place-items-center bg-brand/15 text-brand">
                 {s.icon}
               </div>
               <h3 className="font-display text-xl mt-4">{s.t}</h3>
@@ -585,7 +585,7 @@ function Features() {
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((it) => (
             <div key={it.t} className="glass border-sheen rounded-2xl p-6 hover:-translate-y-1 transition-transform reveal" data-reveal>
-              <div className="size-11 rounded-xl grid place-items-center" style={{ background: "rgba(37,211,102,0.15)", color: "#25D366" }}>
+              <div className="size-11 rounded-xl grid place-items-center bg-brand/15 text-brand">
                 {it.icon}
               </div>
               <h3 className="font-display text-lg mt-4">{it.t}</h3>
@@ -605,7 +605,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
       slug: "starter",
       n: "Starter",
       p: "R$ 97",
-      d: "Pra autônomo testando a operação.",
+      d: "Para profissionais que estão estruturando o atendimento.",
       f: [
         "1 número de WhatsApp",
         "1 usuário",
@@ -620,7 +620,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
       slug: "pro",
       n: "Pro",
       p: "R$ 197",
-      d: "Pra time que já vende todo dia. O mais escolhido.",
+      d: "Para escritórios com uma equipe de atendimento.",
       f: [
         "1 número de WhatsApp",
         "5 usuários no painel",
@@ -638,7 +638,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
       slug: "business",
       n: "Business",
       p: "R$ 497",
-      d: "Pra operação alta performance e múltiplas equipes.",
+      d: "Para operações jurídicas com equipes maiores.",
       f: [
         "1 número de WhatsApp",
         "20 usuários no painel",
@@ -654,8 +654,8 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
   return (
     <section id="planos" className="px-5 md:px-8 py-24 md:py-28">
       <div className="mx-auto max-w-6xl">
-        <SectionTitle eyebrow="Planos" title={<>Quanto mais <span className="text-grad">cresce</span>, mais <span className="text-grad">economiza</span>.</>} />
-        <p className="text-center text-white/55 max-w-2xl mx-auto mt-4 text-[15px]">Todos os planos têm 3 dias grátis. Cancele antes do fim do trial e não é cobrado.</p>
+        <SectionTitle eyebrow="Planos" title={<>Escolha a estrutura ideal para <span className="text-grad">o seu escritório</span>.</>} />
+        <p className="text-center text-white/55 max-w-2xl mx-auto mt-4 text-[15px]">Todos os planos têm 3 dias grátis, sem cartão.</p>
         <div className="mt-12 grid md:grid-cols-3 gap-5 items-stretch">
           {plans.map((pl) => (
             <div
@@ -678,7 +678,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
               <ul className="mt-6 space-y-2.5 text-sm flex-1">
                 {pl.f.map((x) => (
                   <li key={x} className="flex gap-2.5">
-                    <span className="mt-0.5 size-4 rounded-full grid place-items-center shrink-0" style={{ background: "rgba(37,211,102,0.2)" }}>
+                    <span className="mt-0.5 size-4 rounded-full grid place-items-center shrink-0 bg-brand/20">
                       <Check className="size-2.5 text-brand" strokeWidth={3} />
                     </span>
                     <span className="text-white/80">{x}</span>
@@ -688,7 +688,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
               <button
                 onClick={() => onCta("/entrar", pl.slug)}
                 className={`mt-7 w-full px-4 py-3 rounded-xl font-semibold transition ${
-                  pl.highlight ? "text-black btn-glow" : "glass-strong text-white hover:bg-white/10"
+                   pl.highlight ? "text-primary-foreground btn-glow" : "glass-strong text-white hover:bg-white/10"
                 }`}
                 style={pl.highlight ? { background: "linear-gradient(135deg,var(--brand),var(--brand-strong))" } : undefined}
               >
@@ -697,7 +697,7 @@ function Pricing({ onCta }: { onCta: (p: "/entrar" | "/demo/dashboard" | "#plano
             </div>
           ))}
         </div>
-        <p className="mt-5 text-center text-xs text-white/40">Cartão é exigido apenas para liberar o trial. Cancele em até 3 dias e não pagamos nada.</p>
+        <p className="mt-5 text-center text-xs text-white/40">Comece sem cartão e escolha se deseja assinar ao final do período grátis.</p>
       </div>
     </section>
   );
@@ -766,7 +766,7 @@ function Faq() {
               <div key={it.q} className="glass border-sheen rounded-2xl overflow-hidden reveal" data-reveal>
                 <button onClick={() => setOpen(isOpen ? null : i)} className="w-full px-5 py-4 flex items-center justify-between gap-4 text-left">
                   <span className="font-semibold">{it.q}</span>
-                  <span className="size-7 grid place-items-center rounded-full shrink-0" style={{ background: "rgba(37,211,102,0.15)", color: "#25D366" }}>
+                  <span className="size-7 grid place-items-center rounded-full shrink-0 bg-brand/15 text-brand">
                     {isOpen ? <Minus className="size-4" /> : <Plus className="size-4" />}
                   </span>
                 </button>
@@ -864,7 +864,7 @@ function Footer() {
         </div>
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row gap-3 items-center justify-between text-xs text-white/40">
           <span>© {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.</span>
-          <span>Feito no Brasil com ☕ e WhatsApp.</span>
+          <span>Tecnologia brasileira para a advocacia.</span>
         </div>
       </div>
     </footer>

@@ -115,7 +115,7 @@ function Home() {
         </h1>
         <p className="text-[13.5px] md:text-sm text-muted-foreground mt-1.5">
           {funcionando
-            ? "A IA responde suas mensagens e organiza seus clientes automaticamente."
+            ? "A IA apoia o atendimento e mantém os contatos do escritório organizados."
             : "Resolva os pontos abaixo para a IA voltar a responder por você."}
         </p>
       </header>
@@ -150,8 +150,8 @@ function Home() {
         <h2 className="font-display text-[17px] font-semibold">Hoje</h2>
         <div className="grid grid-cols-3 gap-3 mt-4">
           <Numero icon={<MessageCircle className="size-4" />} valor={conversasHoje} label="Conversas" />
-          <Numero icon={<Users className="size-4" />} valor={clientesHoje} label="Clientes atendidos" />
-          <Numero icon={<Target className="size-4" />} valor={oportunidades} label="Oportunidades abertas" />
+          <Numero icon={<Users className="size-4" />} valor={clientesHoje} label="Contatos atendidos" />
+          <Numero icon={<Target className="size-4" />} valor={oportunidades} label="Atendimentos abertos" />
         </div>
       </section>
 
@@ -188,8 +188,8 @@ function Home() {
       {/* 5. Ações rápidas */}
       <section className="grid gap-3 grid-cols-1 sm:grid-cols-3">
         <Acao to="/app/conversas" icon={<MessageCircle className="size-[18px]" />} titulo="Ver conversas" desc="Acompanhe e responda quando quiser" />
-        <Acao to="/app/crm" icon={<Users className="size-[18px]" />} titulo="Ver clientes" desc="Seus contatos e oportunidades" />
-        <Acao to="/app/agente" icon={<Settings className="size-[18px]" />} titulo="Configurar Atendente IA" desc="Ajuste como a IA fala com você" />
+        <Acao to="/app/crm" icon={<Users className="size-[18px]" />} titulo="Ver contatos" desc="Acompanhe cada atendimento no CRM" />
+        <Acao to="/app/agente" icon={<Settings className="size-[18px]" />} titulo="Configurar Atendente IA" desc="Ajuste como a IA fala com seus contatos" />
       </section>
 
       {/* 6. Créditos/plano discretos */}
