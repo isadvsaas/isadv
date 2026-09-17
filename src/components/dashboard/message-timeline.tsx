@@ -36,7 +36,7 @@ export function MessageTimeline({ items, empty }: { items: TimelineItem[]; empty
 export function AuthorBadge({ autor }: { autor: "ia" | "humano" | "contato" }) {
   const cls =
     autor === "ia"
-      ? "bg-[rgba(37,211,102,.15)] text-[#9af0bd] ring-1 ring-[rgba(37,211,102,.25)]"
+      ? "bg-primary/15 text-primary ring-1 ring-primary/25"
       : "bg-muted text-foreground/70 ring-1 ring-white/10";
   const txt = autor === "ia" ? "IA" : autor === "humano" ? "Atendente" : "Contato";
   return <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${cls}`}>{txt}</span>;
