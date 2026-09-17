@@ -148,19 +148,19 @@ function KanbanPage() {
     <div className="space-y-6">
       <header className="flex items-center justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="flex items-center gap-2">Clientes <HelpTip text="Funil de vendas dos seus clientes. Arraste os cards entre etapas (Novo → Qualificado → Proposta → Fechado) para acompanhar cada oportunidade. O atendente IA também move automaticamente." /></h1>
-          <p className="text-sm text-muted-foreground">CRM e oportunidades</p>
+          <h1 className="flex items-center gap-2">Contatos <HelpTip text="Fluxo de atendimento do escritório. Arraste os cards entre etapas para acompanhar cada novo contato. O atendente IA também pode mover os cards automaticamente." /></h1>
+          <p className="text-sm text-muted-foreground">CRM e atendimentos</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button variant="outline" onClick={() => setNewStageOpen(true)}><Plus className="size-4 mr-1.5" />Nova etapa</Button>
-          <Button onClick={() => setAdding(true)}><Plus className="size-4 mr-1.5" />Adicionar conversa</Button>
+          <Button onClick={() => setAdding(true)}><Plus className="size-4 mr-1.5" />Adicionar contato</Button>
         </div>
       </header>
 
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px] max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <Input placeholder="Buscar cliente…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Input placeholder="Buscar contato…" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
         </div>
         <div className="hidden md:inline-flex rounded-lg border border-[var(--border)] bg-[var(--panel)] p-1">
           <button onClick={() => setView("kanban")}
@@ -172,7 +172,7 @@ function KanbanPage() {
             <List className="size-3.5" /> Lista
           </button>
         </div>
-        <div className="text-sm text-muted-foreground ml-auto">{visibleCards.length} cliente(s)</div>
+        <div className="text-sm text-muted-foreground ml-auto">{visibleCards.length} contato(s)</div>
       </div>
 
       {cards.length === 0 ? (

@@ -29,18 +29,18 @@ export function MiniAreaChart({
       <svg viewBox={`0 0 ${w} ${h}`} width="100%" height={h} preserveAspectRatio="none">
         <defs>
           <linearGradient id={`g-${id}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#25D366" stopOpacity=".35" />
-            <stop offset="1" stopColor="#25D366" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--brand)" stopOpacity=".35" />
+            <stop offset="1" stopColor="var(--brand)" stopOpacity="0" />
           </linearGradient>
         </defs>
         <polygon points={areaA} fill={`url(#g-${id})`} />
-        <polyline points={ptsA} fill="none" stroke="#25D366" strokeWidth="2.5" />
+        <polyline points={ptsA} fill="none" stroke="var(--brand)" strokeWidth="2.5" />
         {ptsB && (
           <polyline points={ptsB} fill="none" stroke="#22D3EE" strokeWidth="2" strokeDasharray="4 4" />
         )}
       </svg>
       <div className="flex items-center gap-4 text-[11px] text-muted-foreground mt-1 px-1">
-        <span className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-[#25D366]" /> {labelA}</span>
+        <span className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-brand" /> {labelA}</span>
         {ptsB && <span className="flex items-center gap-1.5"><span className="size-2 rounded-full bg-[#22D3EE]" /> {labelB}</span>}
         <span className="ml-auto opacity-60">pico {max}</span>
       </div>

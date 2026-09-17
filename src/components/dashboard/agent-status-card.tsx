@@ -16,7 +16,7 @@ export function AgentStatusCard({
       <h3 className="font-display text-[15px] font-semibold">Status do Agente</h3>
       <p className="text-xs text-muted-foreground mb-4">tempo real</p>
       <div className="flex items-center gap-3.5 pb-4 border-b border-border">
-        <div className="size-13 w-[52px] h-[52px] rounded-2xl grid place-items-center text-[#00E676] bg-[rgba(37,211,102,.14)]">
+        <div className="size-13 w-[52px] h-[52px] rounded-2xl grid place-items-center text-primary bg-primary/15">
           <Bot className="size-6" />
         </div>
         <div className="min-w-0">

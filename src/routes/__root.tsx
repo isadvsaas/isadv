@@ -100,8 +100,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: `${brand.name} — Atendimento inteligente para advocacia` },
       { name: "twitter:description", content: "Centralize conversas, organize contatos no CRM e agilize o atendimento do seu escritório com inteligência artificial." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/063e785c-e670-4910-86a1-b0bb141f6a96/id-preview-36807bb7--be429179-e739-4302-b8f8-67595d55c75d.lovable.app-1781545525627.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/063e785c-e670-4910-86a1-b0bb141f6a96/id-preview-36807bb7--be429179-e739-4302-b8f8-67595d55c75d.lovable.app-1781545525627.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

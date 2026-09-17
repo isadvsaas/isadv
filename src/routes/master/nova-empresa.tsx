@@ -75,7 +75,7 @@ function NovaEmpresa() {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <Label>Nome da empresa</Label>
-              <Input required value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex.: Padaria do Bairro" />
+              <Input required value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex.: Silva & Associados" />
             </div>
             <div>
               <Label>Email do responsável</Label>
